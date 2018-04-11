@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const cardSchema = new Schema ({
+const songSchema = new Schema ({
     name: String,
     artist: String,
     album: String,

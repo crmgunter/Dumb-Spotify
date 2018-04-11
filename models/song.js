@@ -3,4 +3,4 @@ const songSchema = require('../db/schemas/songSchema')
 
 const Song = mongoose.model('song', songSchema)
 
-model.exports = Song
+module.exports = Song
