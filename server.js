@@ -5,6 +5,7 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const app = express()
 const userController = require('./controllers/userController')
+const playlistController = require('./controllers/playlistController')
 
 mongoose.connect(process.env.MONGODB_URI)
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/users', userController)
+app.use('/api/users/:userId/playlists', playlistController)
 
 const PORT = process.env.PORT || 3001
 
