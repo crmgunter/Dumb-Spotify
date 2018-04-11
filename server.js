@@ -7,6 +7,7 @@ const app = express()
 const userController = require('./controllers/userController')
 const playlistController = require('./controllers/playlistController')
 const songController = require('./controllers/songController')
+
 mongoose.connect(process.env.MONGODB_URI)
 
 const db = mongoose.connection
@@ -20,6 +21,7 @@ db.on('open', () => {
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
+app.use(express.static(`${__dirname}/client/build`))
 
 app.get('/', (req, res) => {
     res.send("Hello World")
@@ -28,6 +30,10 @@ app.get('/', (req, res) => {
 app.use('/api/users', userController)
 app.use('/api/users/:userId/playlists', playlistController)
 app.use('/api/users/:userId/playlists/:playlistId/songs', songController)
+
+app.get('/*', (req, res) => {
+    res.sendFile(`${__dirname}/client/build/index.html`)
+})
 
 const PORT = process.env.PORT || 3001
 
