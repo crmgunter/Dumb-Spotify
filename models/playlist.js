@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const userSchema = require('../db/schemas/userSchema')
+const playlistSchema = require('../db/schemas/playlistSchema')
 
-const User = mongoose.model('user', userSchema)
+const Playlist = mongoose.model('playlist', playlistSchema)
 
-model.exports = User
+model.exports = Playlist
