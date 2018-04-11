@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
 const app = express()
+const userController = require('./controllers/userController')
 
 mongoose.connect(process.env.MONGODB_URI)
 
@@ -22,6 +23,8 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
     res.send("Hello World")
 })
+
+app.use('/api/users', userController)
 
 const PORT = process.env.PORT || 3001
 
