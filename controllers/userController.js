@@ -33,4 +33,29 @@ router.get('/:id', (req, res) => {
     })
 })
 
+//UPDATE ROUTE
+router.patch('/:id', (req, res) => {
+    const userId = req.params.id
+    const updatedUser = req.body
+    const savedUser = User.findByIdAndUpdate(userId, updatedUser)
+    .then((updatedUser) => {
+        res.json(savedUser)
+    }).catch((err) => {
+        console.log(err)
+        res.status.json(err)
+    })
+})
+
+//DELETE ROUTE
+router.delete('/:id', (req, res) => {
+    const userId = req.params.id
+    User.findByIdAndRemove(userId)
+    .then(() => {
+        console.log('Successfully deleted')
+        res.json('successfully deleted')
+    }).catch((err) => {
+        console.log(err)
+    })
+})
+
 module.exports = router
