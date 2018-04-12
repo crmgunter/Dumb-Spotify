@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-
+import { Link } from 'react-router-dom'
 class User extends Component {
     state = {
-        user: {}
+        user: {
+            playlists: []
+        }
     }
 
     componentDidMount() {
@@ -23,6 +25,12 @@ class User extends Component {
                 {this.state.user.username}
                 {this.state.user.location}
                 <img src={this.state.user.image} alt="user image"/>
+                {this.state.user.playlists.map(playlist => (
+                    <div key={playlist._id}>
+                    <Link to={`/users/${this.state.user._id}/playlists/${playlist._id}`}>{playlist.name}</Link>
+                    {playlist.description}
+                    </div>
+                ))}
             </div>
         );
     }
