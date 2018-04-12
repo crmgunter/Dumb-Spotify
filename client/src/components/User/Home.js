@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import Spotify from 'spotify-web-api-js'
 import User from './User'
 import NewUserForm from './NewUserForm'
 
