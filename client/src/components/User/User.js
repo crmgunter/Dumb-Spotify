@@ -8,7 +8,8 @@ class User extends Component {
         user: {
             playlists: [],
             form: false
-        }
+        },
+        delete: false
     }
 
     componentDidMount() {
@@ -26,6 +27,16 @@ class User extends Component {
         this.setState({ form: !this.state.form})
     }
 
+    toggleRemove = () => {
+        this.setState({ delete: !this.state.delete})
+    }
+
+    remove = async () => {
+        const userId = this.props.match.params.userId
+        await axios.delete(`/api/users/${userId}`)
+        this.props.history.push(`/`)
+    }
+
     render() {
         return (
             <div>
@@ -37,6 +48,14 @@ class User extends Component {
                 {this.state.form? (<EditUserForm 
                 user={this.state.user}
                 getUser={this.getUser}/>) : null}
+                <button onClick={this.toggleRemove}>Delete User</button>
+                {this.state.delete? (
+                    <div>
+                <p>Are you sure you want to delete?</p>
+                <button onClick={this.remove}>Yes</button>
+            <button onClick={this.toggleRemove}>No</button>
+            </div>) : null}
+
                 {this.state.user.playlists.map(playlist => (
                     <div key={playlist._id}>
                     <Link to={`/users/${this.state.user._id}/playlists/${playlist._id}`}>{playlist.name}</Link>
