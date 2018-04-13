@@ -14,6 +14,10 @@ class Home extends Component {
     this.state = {
       loggedIn: params.access_token ? true : false,
       users: [],
+      user: {
+          images: [{}],
+          followers: {}
+      },
       form: false
     };
     if (params.access_token) {
@@ -33,8 +37,19 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.getAllUsers();
-  }
+    if (this.state.loggedIn) {
+      let params = this.getHashParams();
+      let accessToken = params.access_token;
+
+      fetch("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ user : data }))
+        .then(data => console.log(this.state))
+    }
+    this.getAllUsers()
+}
 
   getAllUsers = async () => {
     const res = await axios.get("/api/users");
@@ -61,6 +76,19 @@ class Home extends Component {
             <img src={user.image} alt="user image" />
           </div>
         ))}
+
+        <div>
+            <div>
+                <img src={this.state.user.images[0].url} />
+                <div>
+                    {this.state.user.display_name}
+                    {this.state.user.country}
+                    {this.state.user.email}
+                    {this.state.user.followers.total}
+                    {this.state.user.product}
+                </div>
+            </div>
+        </div>
       </div>
     );
   }
