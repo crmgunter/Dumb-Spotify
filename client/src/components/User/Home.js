@@ -50,6 +50,7 @@ class Home extends Component {
         .then(data => console.log(this.state));
     }
     this.getAllUsers();
+    this.getToken()
   }
 
   getToken = () => {

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import EditUserForm from "./EditUserForm";
 import Spotify from 'spotify-web-api-js'
+import UserPlaylists from "./UserPlaylists";
 
 const SpotifyWebApi = new Spotify()
 
@@ -98,6 +99,8 @@ class User extends Component {
             {this.state.spotifyUser.display_name}
             <img src={this.state.spotifyUser.images[0].url}/>
         </div>
+        <UserPlaylists
+        getSpotifyUser={this.getSpotifyUser}/>
       </div>
     );
   }
