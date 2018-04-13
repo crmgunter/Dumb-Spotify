@@ -1,27 +1,36 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom'
 class UserPlaylists extends Component {
-    state = {}
-
-    componentDidMount() {
-        this.getSpotifyUser()
+    state = {
+        playlists: {
+            items: [{}]
+        }
     }
 
-    getSpotifyUser = () => {
+    componentDidMount() {
+        this.getPlaylists()
+    }
+
+    getPlaylists = () => {
         const token = localStorage.getItem('token')
-        console.log(token)
-        fetch("https://api.spotify.com/v1/me", {
-          headers: { Authorization: `Bearer ${token}` }
+        fetch('https://api.spotify.com/v1/me/playlists', {
+            headers: { Authorization: `Bearer ${token}`}
         })
-          .then(response => response.json())
-          .then(data => this.setState({ spotifyUser: data }))
-          .then(data => console.log(this.state.spotifyUser.display_name));
+        .then(response => response.json())
+        .then(data => this.setState({ playlists: data }))
     }
 
     render() {
         return (
             <div>
-                <h1>Aye yo whaddup</h1>
+                <h1>playlists:</h1>
+                {this.state.playlists.items.map(playlist => (
+                    <div>
+                        <Link to={`/users/${this.props.userId}/playlists/${playlist.id}`}>
+                        {playlist.name}
+                        </Link>
+                    </div>
+                ))}
             </div>
         );
     }

@@ -97,10 +97,11 @@ class User extends Component {
         ))}
         <div>
             {this.state.spotifyUser.display_name}
-            <img src={this.state.spotifyUser.images[0].url}/>
+            {this.state.user.images ? (<img src={this.state.user.images[0].url} />) : null}
+            {/* <img src={this.state.spotifyUser.images[0].url}/> */}
         </div>
         <UserPlaylists
-        getSpotifyUser={this.getSpotifyUser}/>
+        userId={this.state.spotifyUser.id}/>
       </div>
     );
   }

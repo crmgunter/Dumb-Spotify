@@ -94,9 +94,13 @@ class Home extends Component {
 
         <div>
           <div>
-            <img src={this.state.user.images[0].url} />
+            {/* <img src={this.state.user.images[0].url} alt="user"/> */}
+            {this.state.user.images[0] ? (<img src={this.state.user.images[0].url} />) : null}
             <div>
-              {this.state.user.display_name}
+              {this.state.user.display_name ? (
+                  <div>{this.state.user.display_name}</div>
+              ) : (
+              <div>Go to user</div>)}
               {this.state.user.country}
               {this.state.user.email}
               {this.state.user.followers.total}
