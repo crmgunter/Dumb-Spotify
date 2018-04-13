@@ -15,13 +15,14 @@ class Home extends Component {
       loggedIn: params.access_token ? true : false,
       users: [],
       user: {
-          images: [{}],
-          followers: {}
+        images: [{}],
+        followers: {}
       },
       form: false
     };
     if (params.access_token) {
       SpotifyWebApi.setAccessToken(params.access_token);
+      console.log(params.access_token);
     }
   }
 
@@ -45,11 +46,18 @@ class Home extends Component {
         headers: { Authorization: `Bearer ${accessToken}` }
       })
         .then(response => response.json())
-        .then(data => this.setState({ user : data }))
-        .then(data => console.log(this.state))
+        .then(data => this.setState({ user: data }))
+        .then(data => console.log(this.state));
     }
-    this.getAllUsers()
-}
+    this.getAllUsers();
+  }
+
+  getToken = () => {
+    let params = this.getHashParams();
+    let accessToken = params.access_token;
+    let token = "token";
+    localStorage.setItem(token, params.access_token);
+  };
 
   getAllUsers = async () => {
     const res = await axios.get("/api/users");
@@ -64,10 +72,16 @@ class Home extends Component {
   render() {
     return (
       <div>
-          <a href="http://localhost:8888"><button>Login with Spotify</button></a>
+        <a href="http://localhost:8888">
+          <button>Login with Spotify</button>
+        </a>
         <button onClick={this.toggleForm}>Create New User</button>
         {this.state.form ? (
-          <NewUserForm getAllUsers={this.getAllUsers} />
+          <NewUserForm
+            getAllUsers={this.getAllUsers}
+            user={this.state.user}
+            token={this.params.access_token}
+          />
         ) : null}
         {this.state.users.map(user => (
           <div key={user._id}>
@@ -78,16 +92,16 @@ class Home extends Component {
         ))}
 
         <div>
+          <div>
+            <img src={this.state.user.images[0].url} />
             <div>
-                <img src={this.state.user.images[0].url} />
-                <div>
-                    {this.state.user.display_name}
-                    {this.state.user.country}
-                    {this.state.user.email}
-                    {this.state.user.followers.total}
-                    {this.state.user.product}
-                </div>
+              {this.state.user.display_name}
+              {this.state.user.country}
+              {this.state.user.email}
+              {this.state.user.followers.total}
+              {this.state.user.product}
             </div>
+          </div>
         </div>
       </div>
     );
