@@ -11,11 +11,14 @@ class Playlist extends Component {
                         name: ''
                     }
                 }]
+        },
+        playlist: {
+            uri: ''
         }
     }
 
     componentDidMount(){
-        // this.getPlaylists()
+        this.getPlaylist()
         this.getTracks()
         
     }
@@ -29,14 +32,17 @@ class Playlist extends Component {
     //     this.setState({ playlist: res.data })
     // }
 
-    // getPlaylists = () => {
-    //     const token = localStorage.getItem('token')
-    //     fetch(`https://api.spotify.com/v1/me/playlists`, {
-    //         headers: { Authorization: `Bearer ${token}`}
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => this.setState({ playlists: data }))
-    // }
+    getPlaylist = () => {
+        const token = localStorage.getItem('token')
+        const userId = this.props.match.params.userId
+        const playlistId = this.props.match.params.playlistId
+
+        fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}`, {
+            headers: { Authorization: `Bearer ${token}`}
+        })
+        .then(response => response.json())
+        .then(data => this.setState({ playlist: data }))
+    }
 
     getTracks = () => {
         const token = localStorage.getItem('token')
@@ -59,20 +65,17 @@ class Playlist extends Component {
             <div>
                 <h1>Playlist</h1>
                     <div>
-                        {/* {this.state.playlist.name}
-                        {this.state.playlist.songs.map(song => (
-                            <div key={song._id}>
-                            <Link to={`/users/${this.props.match.params.userId}/playlists/${this.props.match.params.playlistId}/songs/${song._id}`}>{song.name}</Link>
-                            
-                            </div>
-                        ))}                         */}
+                    <iframe src={`https://open.spotify.com/embed?uri=${this.state.playlist.uri}`} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                     </div>
                     <div>
                         {/* IMPORTANT!!!
-                        IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IT, IT WILL ERROR OUT! */}
+                        IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
                     {this.state.tracks.items.map(track => (
                         <div>
-                            {track.track.name}
+                            <Link to={`/users/${this.props.match.params.userId}/playlists/${this.props.match.params.playlistId}/songs/${track.track.id}`}>{track.track.name}</Link>
+                            <audio controls>
+                                
+                            </audio>
                         </div>
                     ))}
                     </div>
