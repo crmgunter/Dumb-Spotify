@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Home from './components/User/Home'
 import User from './components/User/User'
-import Playlist from './components/Playlist'
+import Playlist from './components/Playlist/Playlist'
 import Song from './components/Song'
 
 class App extends Component {

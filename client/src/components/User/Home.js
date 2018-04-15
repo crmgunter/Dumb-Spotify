@@ -38,20 +38,41 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.state.loggedIn) {
-      let params = this.getHashParams();
-      let accessToken = params.access_token;
-
-      fetch("https://api.spotify.com/v1/me", {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-        .then(response => response.json())
-        .then(data => this.setState({ user: data }))
-        .then(data => console.log(this.state));
-    }
+    this.getSpotifyUser()
     this.getAllUsers();
     this.getToken()
+    // this.saveSpotifyUser()
   }
+
+  getSpotifyUser = () => {
+    if (this.state.loggedIn) {
+        let params = this.getHashParams();
+        let accessToken = params.access_token;
+  
+        fetch("https://api.spotify.com/v1/me", {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+          .then(response => response.json())
+          .then(data => this.setState({ user: data }))
+          .then(data => console.log(this.state));
+      }
+  }
+
+  // THIS SHIT IS BROKEN, FIX IT
+  
+//   saveSpotifyUser = async () => {
+//       this.getSpotifyUser()
+// //       console.log(this.state)
+// //       const payload = {
+// //           username: this.state.user.display_name,
+// //           image: this.state.user.images[0],
+// //           location: this.state.user.country
+// //       }
+// //       console.log(payload)
+// //       await axios.post(`/api/users`, payload)
+// //       await this.getAllUsers()
+// console.log(this.state)
+//   }
 
   getToken = () => {
     let params = this.getHashParams();
