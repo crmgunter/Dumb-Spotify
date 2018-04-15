@@ -73,9 +73,6 @@ class Playlist extends Component {
                     {this.state.tracks.items.map(track => (
                         <div>
                             <Link to={`/users/${this.props.match.params.userId}/playlists/${this.props.match.params.playlistId}/songs/${track.track.id}`}>{track.track.name}</Link>
-                            <audio controls>
-                                
-                            </audio>
                         </div>
                     ))}
                     </div>
