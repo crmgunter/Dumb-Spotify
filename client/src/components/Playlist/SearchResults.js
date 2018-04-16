@@ -6,6 +6,9 @@ class SearchResults extends Component {
     }
 
 
+//THIS NEEDS TO BE CLEANED UP AND ALSO
+//NEEDS TO UPDATE IN REAL TIME
+// FUCKING PLEASE
 
   addTrackToPlaylist = (trackUri) => {
     const token = localStorage.getItem("token");
@@ -21,9 +24,12 @@ class SearchResults extends Component {
         "Content-Type": "application/json"
       }
     )
+    .then(fetch(`https://api.spotify.com/v1/users/${this.props.userId}/playlists/${this.props.playlistId}/tracks`, {
+        headers: { Authorization: `Bearer ${token}` }
+      }))
       .then(res => res.json())
       .catch(err => console.log(err))
-      .then(data => console.log(data));
+      .then(data => this.setState({ tracks: data }));
   };
 
   render() {

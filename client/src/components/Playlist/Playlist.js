@@ -101,7 +101,8 @@ class Playlist extends Component {
         <div>
           <Search 
           userId={this.props.match.params.userId}
-          playlistId={this.props.match.params.playlistId}/>
+          playlistId={this.props.match.params.playlistId}
+          getTracks={this.getTracks}/>
         </div>
       </div>
     );
