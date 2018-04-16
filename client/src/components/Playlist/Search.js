@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchResults from "./SearchResults";
 class Search extends Component {
   state = {
+      toggleButton: false,
     search: "",
     results: {
       artists: {
@@ -18,15 +19,9 @@ class Search extends Component {
             artists: [{}],
             album: {
               name: "",
-              images: [
-                {
-                  url: ""
-                }
-              ]
-            }
-          }
-        ]
-      }
+              images: [{ url: "" }]
+            }}]
+        },
     }
   };
 
@@ -47,7 +42,8 @@ class Search extends Component {
       .then(res => res.json())
       .catch(err => console.log(err))
       .then(data => this.setState({ results: data }))
-      .then(console.log(this.state.results));
+      .then(console.log(this.state.results))
+      .then(this.setState({ toggleButton: true}))
   };
 
   search = () => {};
@@ -64,7 +60,8 @@ class Search extends Component {
             value={this.state.search}
           />
           <button>search</button>
-          <SearchResults results={this.state.results} />
+          <SearchResults results={this.state.results}
+          toggleButton={this.state.toggleButton} />
         </form>
       </div>
     );

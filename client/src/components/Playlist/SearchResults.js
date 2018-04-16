@@ -14,10 +14,11 @@ class SearchResults extends Component {
                 {console.log(this.props.results.tracks.items)}
                 {this.props.results.tracks.items.map((track) => (
                     <div>
+                        <img src={track.album.images[0].url} />
                         <div>{track.name}</div>
                         <div>{track.artists[0].name}</div>
                         <div>{track.album.name}</div>
-                        <img src={track.album.images[0].url} />
+                        {this.props.toggleButton ? (<button>Add to playlist</button>) : null}
                     </div>
                 ))}
             </div>
