@@ -5,6 +5,8 @@ const HeaderStyle = styled.div`
 height: 100px;
 width: 100vw;
 display: flex;
+border-bottom: 1px solid seashell;
+margin-bottom: 20px;
 `
 
 const Center = styled.div`
@@ -16,7 +18,7 @@ class Header extends Component {
         return (
             <HeaderStyle>
                 <Center>
-                    <h1>header</h1>
+                    <h1>Dumb Spotify</h1>
                     </Center>
                 
             </HeaderStyle>

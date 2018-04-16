@@ -10,7 +10,6 @@ const FlexContainer = styled.div`
 display: flex;
 justify-content: space-around;
 flex-wrap: wrap;
-border: 5px solid red;
 `
 
 const SongFlex = styled.div`

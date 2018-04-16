@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import styled from 'styled-components'
+
+const ImageSize = styled.img`
+height: 200px;
+width: 200px;
+`
 
 class Song extends Component {
     state = {
         track: {
             artists: [{}],
-            album: {}
+            album: {
+                images: [{}]
+            }
         }
     }
 
@@ -46,9 +54,16 @@ class Song extends Component {
                 {this.state.song.album}
                 {this.state.song.genre}
                 <img src={this.state.song.albumImage}/> */}
+                {<ImageSize src={this.state.track.album.images[0].url} />}
+                <div>
                 {this.state.track.name}
+                </div>
+                <div>
                 {this.state.track.artists[0].name}
+                </div>
+                <div>
                 {this.state.track.album.name}
+                </div>
             </div>
         );
     }

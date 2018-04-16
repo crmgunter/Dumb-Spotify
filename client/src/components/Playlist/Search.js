@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import SearchResults from "./SearchResults";
+import styled from 'styled-components'
+
+const Margin = styled.div`
+margin: 20px;
+`
+
 class Search extends Component {
   state = {
       toggleButton: false,
@@ -52,7 +58,7 @@ class Search extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="search">Search: </label>
+          <div><label htmlFor="search">Search: </label></div>
           <input
             onChange={this.handleChange}
             type="text"
