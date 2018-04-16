@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import axios from 'axios'
+import styled from 'styled-components'
+
+const ImageStyle = styled.img`
+height: 200px;
+width: 200px;
+`
+
 class SearchResults extends Component {
     state = {
         tracks: [{}]
@@ -37,7 +44,7 @@ class SearchResults extends Component {
         <h1>results:</h1>
         {this.props.results.tracks.items.map(track => (
           <div>
-            <img src={track.album.images[0].url} />
+            <ImageStyle src={track.album.images[0].url} alt=""/>
             <div>{track.name}</div>
             <div>{track.artists[0].name}</div>
             <div>{track.album.name}</div>

@@ -8,7 +8,19 @@ import styled from 'styled-components'
 
 const FlexContainer = styled.div`
 display: flex;
+justify-content: space-around;
 border: 5px solid red;
+`
+
+const SongFlex = styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+`
+
+const ImageSize = styled.img`
+height: 100px;
+width: 100px;
 `
 
 class Playlist extends Component {
@@ -18,7 +30,10 @@ class Playlist extends Component {
       items: [
         {
           track: {
-            name: ""
+            name: "",
+            album: {
+                images: [{}]
+            }
           }
         }
       ]
@@ -102,6 +117,7 @@ class Playlist extends Component {
     return (
       <div>
         <FlexContainer>
+            <div>
           <iframe
             src={`https://open.spotify.com/embed?uri=${
               this.state.playlist.uri
@@ -112,7 +128,14 @@ class Playlist extends Component {
             allowtransparency="true"
             allow="encrypted-media"
           />
-        <button onClick={this.toggleForm}>Edit</button>
+        
+        </div>
+
+        <div>
+          {/* IMPORTANT!!!
+         IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
+         <h1>{this.state.playlist.name}</h1>
+         <button onClick={this.toggleForm}>Edit</button>
         {this.state.editForm ? (
           <EditPlaylistForm
             userId={this.props.match.params.userId}
@@ -120,13 +143,10 @@ class Playlist extends Component {
             getPlaylist={this.getPlaylist}
           />
         ) : null}
-
-        <div>
-          {/* IMPORTANT!!!
-         IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
-         <h1>{this.state.playlist.name}</h1>
+        <SongFlex>
           {this.state.tracks.items.map((track, index) => (
             <div>
+                <div><ImageSize src={track.track.album.images[0].url}/></div>
               <Link
                 to={`/users/${this.props.match.params.userId}/playlists/${
                   this.props.match.params.playlistId
@@ -144,7 +164,9 @@ class Playlist extends Component {
               </p>
             </div>
           ))}
+          </SongFlex>
         </div>
+        </FlexContainer>
         <div>
           <Search
             userId={this.props.match.params.userId}
@@ -152,7 +174,6 @@ class Playlist extends Component {
             getTracks={this.getTracks}
           />
         </div>
-        </FlexContainer>
       </div>
     );
   }
