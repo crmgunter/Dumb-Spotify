@@ -24,6 +24,19 @@ class UserPlaylists extends Component {
       .then(data => this.setState({ playlists: data }));
   };
 
+  unfollowPlaylist = (id) => {
+    const userId = this.props.userId
+    console.log(userId)
+    const playlistId = id
+    console.log(playlistId)
+    const token = localStorage.getItem("token");
+    fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/followers`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    this.getPlaylists()
+}
+
   toggleForm = () => {
     this.setState({ newForm: !this.state.newForm })
   }
@@ -41,6 +54,7 @@ class UserPlaylists extends Component {
             <Link to={`/users/${this.props.userId}/playlists/${playlist.id}`}>
               {playlist.name}
             </Link>
+            <p onClick={() => {this.unfollowPlaylist(playlist.id)}}>X</p>
           </div>
         ))}
       </div>
