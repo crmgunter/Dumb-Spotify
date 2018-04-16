@@ -9,6 +9,7 @@ import styled from 'styled-components'
 const FlexContainer = styled.div`
 display: flex;
 justify-content: space-around;
+flex-wrap: wrap;
 border: 5px solid red;
 `
 
@@ -21,6 +22,11 @@ justify-content: space-between;
 const ImageSize = styled.img`
 height: 100px;
 width: 100px;
+`
+
+const TrackContainer = styled.div`
+height: 200px;
+width: 150px;
 `
 
 class Playlist extends Component {
@@ -144,8 +150,9 @@ class Playlist extends Component {
           />
         ) : null}
         <SongFlex>
+            
           {this.state.tracks.items.map((track, index) => (
-            <div>
+            <TrackContainer>
                 <div><ImageSize src={track.track.album.images[0].url}/></div>
               <Link
                 to={`/users/${this.props.match.params.userId}/playlists/${
@@ -162,7 +169,7 @@ class Playlist extends Component {
               >
                 X
               </p>
-            </div>
+            </TrackContainer>
           ))}
           </SongFlex>
         </div>
