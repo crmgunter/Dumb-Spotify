@@ -99,7 +99,9 @@ class Playlist extends Component {
           ))}
         </div>
         <div>
-          <Search />
+          <Search 
+          userId={this.props.match.params.userId}
+          playlistId={this.props.match.params.playlistId}/>
         </div>
       </div>
     );

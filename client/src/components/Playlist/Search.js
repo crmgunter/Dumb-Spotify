@@ -61,7 +61,9 @@ class Search extends Component {
           />
           <button>search</button>
           <SearchResults results={this.state.results}
-          toggleButton={this.state.toggleButton} />
+          toggleButton={this.state.toggleButton}
+          userId={this.props.userId}
+          playlistId={this.props.playlistId} />
         </form>
       </div>
     );
