@@ -27,8 +27,9 @@ class SearchResults extends Component {
     //   .then(res => res.json())
     //   .catch(err => console.log(err))
     //   .then(data => this.setState({ tracks: data }))
-      .then(this.props.getTracks())
+    //   .then(this.props.getTracks())
   };
+
 
   render() {
     return (

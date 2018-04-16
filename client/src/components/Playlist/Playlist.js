@@ -69,9 +69,28 @@ class Playlist extends Component {
       });
   };
 
+
+  //THIS SHIT DOES NOT WORK GOD DAMN IT
+//   removeTrackFromPlayList = trackUri => {
+//     const token = localStorage.getItem("token");
+//     const userId = this.props.match.params.userId;
+//     const playlistId = this.props.match.params.playlistId;
+//     const url = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks/${params}`;
+//     const uri = trackUri;
+//     console.log(uri);
+//     const params = `?uris=${uri}`;
+
+//     fetch(url, {
+//       mehtod: "DELETE",
+//       headers: { Authorization: `Bearer ${token}` },
+//       "Content-Type": "application/json",
+//     fuck: {"tracks": [{"uri": uri, "positions": [0]}]}
+//     })
+//   };
+
   toggleForm = () => {
-      this.setState({ editForm: !this.state.editForm })
-  }
+    this.setState({ editForm: !this.state.editForm });
+  };
 
   render() {
     return (
@@ -94,15 +113,17 @@ class Playlist extends Component {
           <h1>{this.state.playlist.name}</h1>
         </div>
         <button onClick={this.toggleForm}>Edit</button>
-        {this.state.editForm? (<EditPlaylistForm 
-        userId={this.props.match.params.userId}
-        playlistId={this.props.match.params.playlistId}
-        getPlaylist={this.getPlaylist}
-        />) : null}
+        {this.state.editForm ? (
+          <EditPlaylistForm
+            userId={this.props.match.params.userId}
+            playlistId={this.props.match.params.playlistId}
+            getPlaylist={this.getPlaylist}
+          />
+        ) : null}
 
         <div>
           {/* IMPORTANT!!!
-                        IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
+         IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
           {this.state.tracks.items.map(track => (
             <div>
               <Link
@@ -112,6 +133,13 @@ class Playlist extends Component {
               >
                 {track.track.name}
               </Link>
+              <p
+                onClick={() => {
+                  this.removeTrackFromPlayList(track.track.uri);
+                }}
+              >
+                X
+              </p>
             </div>
           ))}
         </div>
