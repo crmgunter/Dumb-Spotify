@@ -65,6 +65,7 @@ class UserPlaylists extends Component {
         {this.state.newForm? (<NewPlaylistForm 
        userId={this.props.userId}
        getPlaylists={this.getPlaylists}/>) : null}
+
        <FlexContainer>
         {this.state.playlists.items.map(playlist => (
           <div>

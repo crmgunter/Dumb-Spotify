@@ -9,12 +9,12 @@ import styled from 'styled-components'
 const General = styled.div`
 min-height: 100vh;
 text-align: center;
-background: black;
-color: green;
+background: #181818;
+color: #00E155;
 
 a {
   text-decoration: none;
-  color: green;
+  color: #00E155;
 }
 
 h1 {

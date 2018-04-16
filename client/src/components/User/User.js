@@ -7,8 +7,7 @@ import UserPlaylists from "./UserPlaylists";
 import styled from 'styled-components'
 
 const Margin = styled.div`
-margin: 20px;
-background: black;
+/* margin: 20px; */
 `
 
 const SpotifyWebApi = new Spotify()
@@ -109,14 +108,14 @@ class User extends Component {
         ))} */}
 
 
-        <Margin>
-          <div>
+        <div>
+          <Margin>
             {this.state.spotifyUser.images ? (<div><img src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
             <div>{this.state.spotifyUser.display_name}</div>
             <div>{this.state.spotifyUser.country}</div>
             <div><p>Followers: {this.state.spotifyUser.followers.total}</p></div>
-            </div>
-        </Margin>
+            </Margin>
+        </div>
         <UserPlaylists
         userId={this.state.spotifyUser.id}/>
       </div>

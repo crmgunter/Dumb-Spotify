@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import Song from "../Song";
 import Search from "./Search";
 import EditPlaylistForm from "./EditPlaylistForm";
+import styled from 'styled-components'
+
+const FlexContainer = styled.div`
+display: flex;
+border: 5px solid red;
+`
 
 class Playlist extends Component {
   state = {
@@ -95,8 +101,7 @@ class Playlist extends Component {
   render() {
     return (
       <div>
-        <h1>Playlist</h1>
-        <div>
+        <FlexContainer>
           <iframe
             src={`https://open.spotify.com/embed?uri=${
               this.state.playlist.uri
@@ -107,11 +112,6 @@ class Playlist extends Component {
             allowtransparency="true"
             allow="encrypted-media"
           />
-        </div>
-
-        <div>
-          <h1>{this.state.playlist.name}</h1>
-        </div>
         <button onClick={this.toggleForm}>Edit</button>
         {this.state.editForm ? (
           <EditPlaylistForm
@@ -124,6 +124,7 @@ class Playlist extends Component {
         <div>
           {/* IMPORTANT!!!
          IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
+         <h1>{this.state.playlist.name}</h1>
           {this.state.tracks.items.map((track, index) => (
             <div>
               <Link
@@ -151,6 +152,7 @@ class Playlist extends Component {
             getTracks={this.getTracks}
           />
         </div>
+        </FlexContainer>
       </div>
     );
   }

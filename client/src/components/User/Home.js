@@ -6,8 +6,8 @@ import User from "./User";
 import NewUserForm from "./NewUserForm";
 import styled from 'styled-components'
 
-const General = styled.div`
-background: blue;
+const ImageStyles = styled.img`
+border-radius: 50%;
 `
 
 const SpotifyWebApi = new Spotify();
@@ -109,7 +109,7 @@ class Home extends Component {
         <div>
           <div>
             {/* <img src={this.state.user.images[0].url} alt="user"/> */}
-            {this.state.user.images[0] ? (<img src={this.state.user.images[0].url} />) : null}
+            {this.state.user.images[0] ? (<ImageStyles src={this.state.user.images[0].url} />) : null}
             <div>
               {this.state.user.display_name ? (
                   <div><Link to={`users/${this.state.user.id}`}>{this.state.user.display_name}</Link></div>
