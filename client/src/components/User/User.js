@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import EditUserForm from "./EditUserForm";
 import Spotify from 'spotify-web-api-js'
 import UserPlaylists from "./UserPlaylists";
+import styled from 'styled-components'
+
+const Margin = styled.div`
+margin: 20px;
+background: black;
+`
 
 const SpotifyWebApi = new Spotify()
 
@@ -19,7 +25,10 @@ class User extends Component {
       },
       delete: false,
       spotifyUser: {
-          images: [{}]
+          images: [{}],
+          followers: {
+            total: ''
+          }
       }
     };
     if (params) {
@@ -68,11 +77,14 @@ class User extends Component {
   render() {
     return (
       <div>
-        <h1>hey from single user</h1>
-        {this.state.user.username}
-        {this.state.user.location}
-        <img src={this.state.user.image} alt="user image" />
-        <button onClick={this.toggleForm}>Edit User</button>
+        {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+        {/* ALL OF THIS COMMENTED OUT CODE IS FOR DATABASE STORED USERS */}
+        {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+        {/* <h1>hey from single user</h1> */}
+        {/* {this.state.user.username}
+        {this.state.user.location} */}
+        {/* <img src={this.state.user.image} alt="user image" /> */}
+        {/* <button onClick={this.toggleForm}>Edit User</button>
         {this.state.form ? (
           <EditUserForm user={this.state.user} getUser={this.getUser} />
         ) : null}
@@ -83,9 +95,9 @@ class User extends Component {
             <button onClick={this.remove}>Yes</button>
             <button onClick={this.toggleRemove}>No</button>
           </div>
-        ) : null}
+        ) : null} */}
 
-        {this.state.user.playlists.map(playlist => (
+        {/* {this.state.user.playlists.map(playlist => (
           <div key={playlist._id}>
             <Link
               to={`/users/${this.state.user._id}/playlists/${playlist._id}`}
@@ -94,12 +106,17 @@ class User extends Component {
             </Link>
             {playlist.description}
           </div>
-        ))}
-        <div>
-            {this.state.spotifyUser.display_name}
-            {this.state.user.images ? (<img src={this.state.user.images[0].url} />) : null}
-            {/* <img src={this.state.spotifyUser.images[0].url}/> */}
-        </div>
+        ))} */}
+
+
+        <Margin>
+          <div>
+            {this.state.spotifyUser.images ? (<div><img src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
+            <div>{this.state.spotifyUser.display_name}</div>
+            <div>{this.state.spotifyUser.country}</div>
+            <div><p>Followers: {this.state.spotifyUser.followers.total}</p></div>
+            </div>
+        </Margin>
         <UserPlaylists
         userId={this.state.spotifyUser.id}/>
       </div>

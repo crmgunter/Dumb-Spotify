@@ -2,11 +2,27 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import NewPlaylistForm from "../Playlist/NewPlaylistForm";
 import axios from 'axios'
+import styled from 'styled-components'
+
+const ImageSize = styled.img`
+width: 200px;
+height: 200px;
+`
+
+const FlexContainer = styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+`
 
 class UserPlaylists extends Component {
   state = {
     playlists: {
-      items: [{}]
+      items: [{
+        images: [{
+          url: ''
+        }]
+      }]
     },
     newForm: false
   };
@@ -49,14 +65,18 @@ class UserPlaylists extends Component {
         {this.state.newForm? (<NewPlaylistForm 
        userId={this.props.userId}
        getPlaylists={this.getPlaylists}/>) : null}
+       <FlexContainer>
         {this.state.playlists.items.map(playlist => (
           <div>
+            {/* IF A PICTURE EXISTS, THIS WILL PULL IN THE PICTURE */}
+            <div>{playlist.images[0]? (<ImageSize src={playlist.images[0].url} />) : null}</div>
             <Link to={`/users/${this.props.userId}/playlists/${playlist.id}`}>
               {playlist.name}
             </Link>
             <p onClick={() => {this.unfollowPlaylist(playlist.id)}}>X</p>
           </div>
         ))}
+        </FlexContainer>
       </div>
     );
   }

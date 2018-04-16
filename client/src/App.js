@@ -4,11 +4,28 @@ import Home from './components/User/Home'
 import User from './components/User/User'
 import Playlist from './components/Playlist/Playlist'
 import Song from './components/Song'
+import styled from 'styled-components'
+
+const General = styled.div`
+min-height: 100vh;
+text-align: center;
+background: black;
+color: green;
+
+a {
+  text-decoration: none;
+  color: green;
+}
+
+h1 {
+  margin: 0;
+}
+`
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <General>
         <Router>
           <Switch>
             <Route exact path="/" component={Home}/>
@@ -17,7 +34,7 @@ class App extends Component {
             <Route exact path="/users/:userId/playlists/:playlistId/songs/:songId" component={Song}/>
           </Switch>
         </Router>
-      </div>
+      </General>
     );
   }
 }

@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 import User from "./User";
 import NewUserForm from "./NewUserForm";
+import styled from 'styled-components'
+
+const General = styled.div`
+background: blue;
+`
 
 const SpotifyWebApi = new Spotify();
 
@@ -44,7 +49,7 @@ class Home extends Component {
   }
 
 
-  getSpotifyUser = async (event) => {
+  getSpotifyUser = (event) => {
     if (this.state.loggedIn) {
         let params = this.getHashParams();
         let accessToken = params.access_token;
@@ -79,11 +84,13 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {console.log(this.state.user)}
         <a href="http://localhost:8888">
           <button>Login with Spotify</button>
         </a>
-        <button onClick={this.toggleForm}>Create New User</button>
+
+        {/* THIS IS FOR USERS STORED IN THE DATA BASE */}
+
+        {/* <button onClick={this.toggleForm}>Create New User</button>
         {this.state.form ? (
           <NewUserForm
             getAllUsers={this.getAllUsers}
@@ -97,7 +104,7 @@ class Home extends Component {
             {user.location}
             <img src={user.image} alt="user image" />
           </div>
-        ))}
+        ))} */}
 
         <div>
           <div>
@@ -105,7 +112,7 @@ class Home extends Component {
             {this.state.user.images[0] ? (<img src={this.state.user.images[0].url} />) : null}
             <div>
               {this.state.user.display_name ? (
-                  <div>{this.state.user.display_name}</div>
+                  <div><Link to={`users/${this.state.user.id}`}>{this.state.user.display_name}</Link></div>
               ) : (
               <div>Go to user</div>)}
               {this.state.user.country}
