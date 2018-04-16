@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import axios from 'axios'
 class SearchResults extends Component {
     state = {
         tracks: [{}]
@@ -10,7 +10,7 @@ class SearchResults extends Component {
 //NEEDS TO UPDATE IN REAL TIME
 // FUCKING PLEASE
 
-  addTrackToPlaylist = (trackUri) => {
+  addTrackToPlaylist = async (trackUri) => {
     const token = localStorage.getItem("token");
     const uri = trackUri
     const params = `?uris=${uri}`
@@ -24,24 +24,16 @@ class SearchResults extends Component {
         "Content-Type": "application/json"
       }
     )
-    .then(fetch(`https://api.spotify.com/v1/users/${this.props.userId}/playlists/${this.props.playlistId}/tracks`, {
-        headers: { Authorization: `Bearer ${token}` }
-      }))
-      .then(res => res.json())
-      .catch(err => console.log(err))
-      .then(data => this.setState({ tracks: data }));
+    //   .then(res => res.json())
+    //   .catch(err => console.log(err))
+    //   .then(data => this.setState({ tracks: data }))
+      .then(this.props.getTracks())
   };
 
   render() {
     return (
       <div>
         <h1>results:</h1>
-        {/* {console.log(this.props.results.artists.items)}
-                {this.props.results.artists.items.map((artist) => (
-                    <div>
-                        {artist.name}
-                    </div>
-                ))} */}
         {this.props.results.tracks.items.map(track => (
           <div>
             <img src={track.album.images[0].url} />

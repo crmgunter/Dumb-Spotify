@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Song from "../Song";
-import Search from './Search'
+import Search from "./Search";
+import EditPlaylistForm from "./EditPlaylistForm";
 
 class Playlist extends Component {
   state = {
+    editForm: false,
     tracks: {
       items: [
         {
@@ -67,6 +69,10 @@ class Playlist extends Component {
       });
   };
 
+  toggleForm = () => {
+      this.setState({ editForm: !this.state.editForm })
+  }
+
   render() {
     return (
       <div>
@@ -83,6 +89,17 @@ class Playlist extends Component {
             allow="encrypted-media"
           />
         </div>
+
+        <div>
+          <h1>{this.state.playlist.name}</h1>
+        </div>
+        <button onClick={this.toggleForm}>Edit</button>
+        {this.state.editForm? (<EditPlaylistForm 
+        userId={this.props.match.params.userId}
+        playlistId={this.props.match.params.playlistId}
+        getPlaylist={this.getPlaylist}
+        />) : null}
+
         <div>
           {/* IMPORTANT!!!
                         IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
@@ -99,10 +116,11 @@ class Playlist extends Component {
           ))}
         </div>
         <div>
-          <Search 
-          userId={this.props.match.params.userId}
-          playlistId={this.props.match.params.playlistId}
-          getTracks={this.getTracks}/>
+          <Search
+            userId={this.props.match.params.userId}
+            playlistId={this.props.match.params.playlistId}
+            getTracks={this.getTracks}
+          />
         </div>
       </div>
     );

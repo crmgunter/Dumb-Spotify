@@ -41,10 +41,10 @@ class Home extends Component {
     this.getSpotifyUser()
     this.getAllUsers();
     this.getToken()
-    // this.saveSpotifyUser()
   }
 
-  getSpotifyUser = () => {
+
+  getSpotifyUser = async (event) => {
     if (this.state.loggedIn) {
         let params = this.getHashParams();
         let accessToken = params.access_token;
@@ -54,26 +54,11 @@ class Home extends Component {
         })
           .then(response => response.json())
           .then(data => this.setState({ user: data }))
-          .then(data => console.log(this.state));
+          .then(data => console.log(this.state.user.display_name))
       }
   }
 
-  // THIS SHIT IS BROKEN, FIX IT
-  
-//   saveSpotifyUser = async () => {
-//       this.getSpotifyUser()
-// //       console.log(this.state)
-// //       const payload = {
-// //           username: this.state.user.display_name,
-// //           image: this.state.user.images[0],
-// //           location: this.state.user.country
-// //       }
-// //       console.log(payload)
-// //       await axios.post(`/api/users`, payload)
-// //       await this.getAllUsers()
-// console.log(this.state)
-//   }
-
+ 
   getToken = () => {
     let params = this.getHashParams();
     let accessToken = params.access_token;
@@ -85,7 +70,7 @@ class Home extends Component {
     const res = await axios.get("/api/users");
     console.log(res.data);
     this.setState({ users: res.data });
-  };
+  }
 
   toggleForm = () => {
     this.setState({ form: !this.state.form });
@@ -94,6 +79,7 @@ class Home extends Component {
   render() {
     return (
       <div>
+        {console.log(this.state.user)}
         <a href="http://localhost:8888">
           <button>Login with Spotify</button>
         </a>
@@ -102,7 +88,7 @@ class Home extends Component {
           <NewUserForm
             getAllUsers={this.getAllUsers}
             user={this.state.user}
-            token={this.params.access_token}
+            // token={this.params.access_token}
           />
         ) : null}
         {this.state.users.map(user => (

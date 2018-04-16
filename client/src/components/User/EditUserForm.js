@@ -17,7 +17,7 @@ class EditUserForm extends Component {
     this.setState({ user: newState });
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
     const userId = this.props.user._id;
     const payload = this.state.user;
@@ -25,7 +25,7 @@ class EditUserForm extends Component {
       this.setState({ user: res.data });
     });
 
-    this.props.getUser();
+    await this.props.getUser();
   };
 
   render() {
