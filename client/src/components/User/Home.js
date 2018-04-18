@@ -84,9 +84,13 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <a href="http://localhost:8888">
-          <button>Login with Spotify</button>
-        </a>
+        {/* <a href="http://localhost:8888"> */}
+          <button onClick={() => {
+            window.location = window.location.href.includes('localhost') 
+            ? 'http://localhost:8888' 
+            : 'https://cgfinalproject-backend.herokuapp.com/login'
+          }}>Login with Spotify</button>
+        {/* </a> */}
 
         {/* THIS IS FOR USERS STORED IN THE DATA BASE */}
 
