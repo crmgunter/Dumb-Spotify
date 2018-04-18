@@ -84,6 +84,7 @@ class Home extends Component {
   render() {
     return (
       <div>
+        {/* ;lkjsdlfkj */}
         {/* <a href="http://localhost:8888"> */}
           <button onClick={() => {
             window.location = window.location.href.includes('localhost') 
