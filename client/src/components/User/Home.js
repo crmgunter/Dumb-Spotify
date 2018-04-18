@@ -92,7 +92,7 @@ class Home extends Component {
             : 'https://cgfinalproject.herokuapp.com/login'
           }}>Login with Spotify</button>
         {/* </a> */}
-  <p>PLEASE WORK!!!</p>
+  <p>WORK!!!</p>
         {/* THIS IS FOR USERS STORED IN THE DATA BASE */}
 
         {/* <button onClick={this.toggleForm}>Create New User</button>
