@@ -88,7 +88,7 @@ class Home extends Component {
         {/* <a href="http://localhost:8888"> */}
           <button onClick={() => {
             window.location = window.location.href.includes('localhost') 
-            ? 'http://localhost:8888' 
+            ? 'http://localhost:8888/login' 
             : 'https://cg-final-backend.herokuapp.com/login'
           }}>Login with Spotify</button>
         {/* </a> */}
