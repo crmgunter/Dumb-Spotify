@@ -110,8 +110,8 @@ class User extends Component {
 
         <div>
           <Margin>
-            {this.state.spotifyUser.images ? (<div><img src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
-            <div>{this.state.spotifyUser.display_name}</div>
+            {this.state.spotifyUser.images[0] ? (<div><img src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
+            {this.state.spotifyUser.display_name ? (<div>{this.state.spotifyUser.display_name}</div>) : null }
             <div>{this.state.spotifyUser.country}</div>
             <div><p>Followers: {this.state.spotifyUser.followers.total}</p></div>
             </Margin>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 import User from "./User";
 import NewUserForm from "./NewUserForm";
+import UserEvents from './UserEvents'
 import styled from 'styled-components'
 
 const ImageStyles = styled.img`
@@ -139,13 +140,10 @@ class Home extends Component {
             {this.state.user.images[0] ? (<ImageStyles src={this.state.user.images[0].url} />) : null}
             <div>
               {this.state.user.display_name ? (
-                  <div><Link to={`users/${this.state.user.id}`}>{this.state.user.display_name}</Link></div>
+                  <div><Link to={`users/${this.state.user.id}`}>Hello, {this.state.user.display_name.split(' ')[0]}!</Link></div>
               ) : (
-              <div>Go to user</div>)}
-              {this.state.user.country}
-              {this.state.user.email}
-              {this.state.user.followers.total}
-              {this.state.user.product}
+              <Link to={`users/${this.state.user.id}`}><div>Go to user</div></Link>)}
+              {this.state.user.product === 'premium' ? (`You are a ${this.state.user.product} user!`): (`You are an ${this.state.user.product} user!`) }
             </div>
           </div>
         </div>
@@ -161,6 +159,9 @@ class Home extends Component {
          </div>
          ) : null}       
         
+        <div>
+          {this.state.loggedIn ? (<UserEvents />) : null}
+        </div>
       </div>
     );
   }
