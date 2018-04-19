@@ -94,13 +94,6 @@ class Home extends Component {
     localStorage.setItem(token, params.access_token);
   };
 
-  // THIS IS FOR DATABASE STORED USERS
-  // getAllUsers = async () => {
-  //   const res = await axios.get("/api/users");
-  //   console.log(res.data);
-  //   this.setState({ users: res.data });
-  // }
-
   toggleForm = () => {
     this.setState({ form: !this.state.form });
   };
@@ -108,31 +101,11 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {/* ;lkjsdlfkj */}
-        {/* <a href="http://localhost:8888"> */}
           <button onClick={() => {
             window.location = window.location.href.includes('localhost') 
             ? 'http://localhost:8888/login' 
             : 'https://cg-final-backend.herokuapp.com/login'
           }}>Login with Spotify</button>
-        {/* </a> */}
-        {/* THIS IS FOR USERS STORED IN THE DATA BASE */}
-
-        {/* <button onClick={this.toggleForm}>Create New User</button>
-        {this.state.form ? (
-          <NewUserForm
-            getAllUsers={this.getAllUsers}
-            user={this.state.user}
-            // token={this.params.access_token}
-          />
-        ) : null}
-        {this.state.users.map(user => (
-          <div key={user._id}>
-            <Link to={`users/${user._id}`}>{user.username}</Link>
-            {user.location}
-            <img src={user.image} alt="user image" />
-          </div>
-        ))} */}
 
         <div>
           <div>
