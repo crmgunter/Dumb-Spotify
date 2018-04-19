@@ -149,16 +149,18 @@ class Home extends Component {
             </div>
           </div>
         </div>
-
-        <div>
-          {this.state.userTop.items.map((artist) => (
-            <div>
-              
-              <div><ArtistImage src={artist.images[0].url} /></div>
-              <div>{artist.name}</div>
-            </div>
-          ))}
-        </div>
+         {this.state.loggedIn ? (
+           <div>
+           {this.state.userTop.items.map(artist => (
+             <div>
+               
+               <div><ArtistImage src={artist.images[0].url} /></div>
+               <div>{artist.name}</div>
+             </div>
+           ))}
+         </div>
+         ) : null}       
+        
       </div>
     );
   }
