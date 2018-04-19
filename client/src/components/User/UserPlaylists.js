@@ -46,6 +46,7 @@ class UserPlaylists extends Component {
     const playlistId = id
     console.log(playlistId)
     const token = localStorage.getItem("token");
+    console.log(token)
     fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/followers`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },

@@ -10,6 +10,11 @@ const ImageStyles = styled.img`
 border-radius: 50%;
 `
 
+const ArtistImage = styled.img`
+height: 200px;
+width: 200px;
+`
+
 const SpotifyWebApi = new Spotify();
 
 class Home extends Component {
@@ -19,6 +24,11 @@ class Home extends Component {
     this.state = {
       loggedIn: params.access_token ? true : false,
       users: [],
+      userTop: {
+        items: [{
+          images: [{}]
+        }]
+      },
       user: {
         images: [{}],
         followers: {}
@@ -44,8 +54,9 @@ class Home extends Component {
 
   componentDidMount() {
     this.getSpotifyUser()
-    this.getAllUsers();
+    // this.getAllUsers();
     this.getToken()
+    this.getTopArtists()
   }
 
 
@@ -63,6 +74,17 @@ class Home extends Component {
       }
   }
 
+  getTopArtists = () => {
+    let params = this.getHashParams()
+    let accessToken = params.access_token;
+
+    fetch("https://api.spotify.com/v1/me/top/artists", {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+          .then(response => response.json())
+          .then(data => this.setState({ userTop: data }))
+  }
+
  
   getToken = () => {
     let params = this.getHashParams();
@@ -71,11 +93,12 @@ class Home extends Component {
     localStorage.setItem(token, params.access_token);
   };
 
-  getAllUsers = async () => {
-    const res = await axios.get("/api/users");
-    console.log(res.data);
-    this.setState({ users: res.data });
-  }
+  // THIS IS FOR DATABASE STORED USERS
+  // getAllUsers = async () => {
+  //   const res = await axios.get("/api/users");
+  //   console.log(res.data);
+  //   this.setState({ users: res.data });
+  // }
 
   toggleForm = () => {
     this.setState({ form: !this.state.form });
@@ -92,7 +115,6 @@ class Home extends Component {
             : 'https://cg-final-backend.herokuapp.com/login'
           }}>Login with Spotify</button>
         {/* </a> */}
-  <p>WORK!!!</p>
         {/* THIS IS FOR USERS STORED IN THE DATA BASE */}
 
         {/* <button onClick={this.toggleForm}>Create New User</button>
@@ -126,6 +148,16 @@ class Home extends Component {
               {this.state.user.product}
             </div>
           </div>
+        </div>
+
+        <div>
+          {this.state.userTop.items.map((artist) => (
+            <div>
+              
+              <div><ArtistImage src={artist.images[0].url} /></div>
+              <div>{artist.name}</div>
+            </div>
+          ))}
         </div>
       </div>
     );
