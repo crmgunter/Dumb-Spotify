@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
-import UserEvents from './UserEvents'
-import styled from 'styled-components'
+import UserEvents from "./UserEvents";
+import ArtistView from "../Artists/ArtistView";
+import styled from "styled-components";
 
 const ImageStyles = styled.img`
-border-radius: 50%;
-`
+  border-radius: 50%;
+`;
 
 const ArtistImage = styled.img`
-height: 200px;
-width: 200px;
-`
+  height: 200px;
+  width: 200px;
+`;
 
 const SpotifyWebApi = new Spotify();
 
@@ -23,15 +24,19 @@ class Home extends Component {
       loggedIn: params.access_token ? true : false,
       users: [],
       userTop: {
-        items: [{
-          images: [{}]
-        }]
+        items: [
+          {
+            images: [{}],
+            name: ""
+          }
+        ]
       },
       user: {
         images: [{}],
         followers: {}
       },
-      form: false
+      form: false,
+      toggleEvents: ''
     };
     if (params.access_token) {
       SpotifyWebApi.setAccessToken(params.access_token);
@@ -50,37 +55,35 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.getSpotifyUser()
-    this.getToken()
-    this.getTopArtists()
+    this.getSpotifyUser();
+    this.getToken();
+    this.getTopArtists();
   }
 
-
-  getSpotifyUser = (event) => {
+  getSpotifyUser = event => {
     if (this.state.loggedIn) {
-        let params = this.getHashParams();
-        let accessToken = params.access_token;
-  
-        fetch("https://api.spotify.com/v1/me", {
-          headers: { Authorization: `Bearer ${accessToken}` }
-        })
-          .then(response => response.json())
-          .then(data => this.setState({ user: data }))
-      }
-  }
+      let params = this.getHashParams();
+      let accessToken = params.access_token;
+
+      fetch("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ user: data }));
+    }
+  };
 
   getTopArtists = () => {
-    let params = this.getHashParams()
+    let params = this.getHashParams();
     let accessToken = params.access_token;
 
     fetch("https://api.spotify.com/v1/me/top/artists", {
-          headers: { Authorization: `Bearer ${accessToken}` }
-        })
-          .then(response => response.json())
-          .then(data => this.setState({ userTop: data }))
-  }
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ userTop: data }));
+  };
 
- 
   getToken = () => {
     let params = this.getHashParams();
     let token = "token";
@@ -91,45 +94,78 @@ class Home extends Component {
     this.setState({ form: !this.state.form });
   };
 
+  toggleEvents = id => {
+    console.log(id);
+    const artist = id;
+      this.setState({ toggleEvents: id });
+  };
+
   render() {
     return (
       <div>
-          <button onClick={() => {
-            window.location = window.location.href.includes('localhost') 
-            ? 'http://localhost:8888/login' 
-            : 'https://cg-final-backend.herokuapp.com/login'
-          }}>Login with Spotify</button>
+        <button
+          onClick={() => {
+            window.location = window.location.href.includes("localhost")
+              ? "http://localhost:8888/login"
+              : "https://cg-final-backend.herokuapp.com/login";
+          }}
+        >
+          Login with Spotify
+        </button>
 
         <div>
           <div>
             {/* <img src={this.state.user.images[0].url} alt="user"/> */}
-            {this.state.user.images[0] ? (<ImageStyles src={this.state.user.images[0].url} />) : null}
+            {this.state.user.images[0] ? (
+              <ImageStyles src={this.state.user.images[0].url} />
+            ) : null}
             <div>
               {this.state.user.display_name ? (
-                  <div><Link to={`users/${this.state.user.id}`}>Hello, {this.state.user.display_name.split(' ')[0]}!</Link></div>
+                <div>
+                  <Link to={`users/${this.state.user.id}`}>
+                    Hello, {this.state.user.display_name.split(" ")[0]}!
+                  </Link>
+                </div>
               ) : (
-              <Link to={`users/${this.state.user.id}`}><div>Go to user</div></Link>)}
-              {this.state.user.product === 'premium' ? (`You are a ${this.state.user.product} user!`): (`You are an ${this.state.user.product} user!`) }
+                <Link to={`users/${this.state.user.id}`}>
+                  <div>Go to user</div>
+                </Link>
+              )}
+              {this.state.user.product === "premium"
+                ? `You are a ${this.state.user.product} user!`
+                : `You are an ${this.state.user.product} user!`}
             </div>
           </div>
         </div>
-         {this.state.loggedIn ? (
-           <div>
-           {this.state.userTop.items.map(artist => (
-             <div>
-               
-               <div><ArtistImage src={artist.images[0].url} /></div>
-               <div>{artist.name}</div>
-             </div>
-           ))}
-         </div>
-         ) : null}       
-        
+        {this.state.loggedIn ? (
+          <div>
+            {this.state.userTop.items.map(artist => (
+              <div>
+                <div>
+                  <ArtistImage src={artist.images[0].url} />
+                </div>
+                <div
+                  onClick={() => {
+                    this.toggleEvents(artist.id);
+                  }}
+                >
+                  {artist.name}
+                </div>
+                {this.state.toggleEvents === artist.id ? 
+                <ArtistView artistName={artist.name}
+                toggleEvents={this.state.toggleEvents}/> : null}
+              </div>
+            ))}
+          </div>
+        ) : null}
+
         <div>
           {this.state.loggedIn ? (
-          <UserEvents
-          getHashParams={this.getHashParams}
-          userTop={this.state.userTop}/>) : null}
+            <UserEvents
+              getHashParams={this.getHashParams}
+              userTop={this.state.userTop.items.map(item => item.name)}
+            />
+          ) : null}
         </div>
       </div>
     );
