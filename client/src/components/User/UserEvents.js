@@ -1,36 +1,52 @@
 import React, { Component } from "react";
-import axios from "axios";
 class UserEvents extends Component {
-    state = {
-        events: {
-            _embedded: {
-                events: [{
-                    name: ''
-                }]
-            }
-        }
+  state = {
+      userTop: {
+          items: [{}]
+      },
+    events: {
+      _embedded: {
+        events: [
+          {
+            name: ""
+          }
+        ]
+      }
     }
+  };
 
-    componentDidMount() {
-        this.getEvents()
-    }
+  componentDidMount() {
+    this.getTopArtists();
+    this.getEvents()
+  }
 
-  getEvents = async () => {
+
+  getTopArtists = () => {
+    let params = this.props.getHashParams();
+    let accessToken = params.access_token;
+
+    fetch("https://api.spotify.com/v1/me/top/artists", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ userTop: data }));
+  };
+
+  getEvents = () => {
     fetch(
       `https://app.ticketmaster.com/discovery/v2/events.json?apikey=udwfh91BymplrOZLNeV8nhVhMd032Xrn&keyword=ttng&startDateTime=2018-04-19T18:35:00Z&city=atlanta`
-    ).then(response => response.json())
-    .then(data => this.setState({ events: data }))
-    .then(data => console.log(this.state.events));
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ events: data }))
+      .then(data => console.log(this.state.events))
   };
 
   render() {
     return (
       <div>
         <h1>user Events</h1>
-        {this.state.events._embedded.events.map((event) => (
-            <div>
-                {event.name}
-            </div>
+        {this.state.events._embedded.events.map(event => (
+          <div key={event.name}>{event.name}</div>
         ))}
       </div>
     );

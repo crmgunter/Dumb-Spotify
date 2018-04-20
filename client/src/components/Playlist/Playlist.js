@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import Song from "../Song";
 import Search from "./Search";
 import EditPlaylistForm from "./EditPlaylistForm";
 import styled from 'styled-components'
@@ -104,7 +102,6 @@ class Playlist extends Component {
     const uri = `${trackUri}`;
     const position = index;
     console.log(uri, position);
-    const params = `?uris=${uri}`;
 
     fetch(url, {
       method: "DELETE",
@@ -127,6 +124,7 @@ class Playlist extends Component {
             src={`https://open.spotify.com/embed?uri=${
               this.state.playlist.uri
             }`}
+            title="widget"
             width="300"
             height="380"
             frameborder="0"

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
-import User from "./User";
-import NewUserForm from "./NewUserForm";
 import UserEvents from './UserEvents'
 import styled from 'styled-components'
 
@@ -38,7 +35,6 @@ class Home extends Component {
     };
     if (params.access_token) {
       SpotifyWebApi.setAccessToken(params.access_token);
-      console.log(params.access_token);
     }
   }
 
@@ -55,7 +51,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.getSpotifyUser()
-    // this.getAllUsers();
     this.getToken()
     this.getTopArtists()
   }
@@ -71,7 +66,6 @@ class Home extends Component {
         })
           .then(response => response.json())
           .then(data => this.setState({ user: data }))
-          .then(data => console.log(this.state.user.display_name))
       }
   }
 
@@ -89,7 +83,6 @@ class Home extends Component {
  
   getToken = () => {
     let params = this.getHashParams();
-    let accessToken = params.access_token;
     let token = "token";
     localStorage.setItem(token, params.access_token);
   };
@@ -133,7 +126,10 @@ class Home extends Component {
          ) : null}       
         
         <div>
-          {this.state.loggedIn ? (<UserEvents />) : null}
+          {this.state.loggedIn ? (
+          <UserEvents
+          getHashParams={this.getHashParams}
+          userTop={this.state.userTop}/>) : null}
         </div>
       </div>
     );

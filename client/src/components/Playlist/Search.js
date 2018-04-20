@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import SearchResults from "./SearchResults";
-import styled from 'styled-components'
 
-const Margin = styled.div`
-margin: 20px;
-`
 
 class Search extends Component {
   state = {
