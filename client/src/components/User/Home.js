@@ -58,6 +58,16 @@ class Home extends Component {
     this.getSpotifyUser();
     this.getToken();
     this.getTopArtists();
+    this.getLocation()
+  }
+
+  getLocation = () => {
+    fetch(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAIQjITgrmru0jXfT-CESNqvTvxhA6UmZ8
+    `, {
+      "method": "POST"
+    })
+    .then(response => response.json())
+    .then(data => this.setState({ location: data }))
   }
 
   getSpotifyUser = event => {
