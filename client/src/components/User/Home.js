@@ -31,12 +31,22 @@ class Home extends Component {
           }
         ]
       },
+      address: {
+        results: [{
+          formatted_address: ''
+        }]
+      },
+      data: {
+        results: [{
+
+        }]
+      },
       user: {
         images: [{}],
         followers: {}
       },
       form: false,
-      toggleEvents: ''
+      toggleEvents: ""
     };
     if (params.access_token) {
       SpotifyWebApi.setAccessToken(params.access_token);
@@ -58,17 +68,32 @@ class Home extends Component {
     this.getSpotifyUser();
     this.getToken();
     this.getTopArtists();
-    this.getLocation()
+    this.getLocation();
   }
 
   getLocation = () => {
-    fetch(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAIQjITgrmru0jXfT-CESNqvTvxhA6UmZ8
-    `, {
-      "method": "POST"
-    })
-    .then(response => response.json())
-    .then(data => this.setState({ location: data }))
-  }
+    fetch(
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAIQjITgrmru0jXfT-CESNqvTvxhA6UmZ8
+    `,
+      {
+        method: "POST"
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ location: data });
+        let lat = this.state.location.location.lat;
+        let long = this.state.location.location.lng;
+        fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyAIQjITgrmru0jXfT-CESNqvTvxhA6UmZ8`
+        )
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            this.setState({ address: data });
+          });
+      });
+  };
 
   getSpotifyUser = event => {
     if (this.state.loggedIn) {
@@ -107,7 +132,7 @@ class Home extends Component {
   toggleEvents = id => {
     console.log(id);
     const artist = id;
-      this.setState({ toggleEvents: id });
+    this.setState({ toggleEvents: id });
   };
 
   render() {
@@ -145,6 +170,7 @@ class Home extends Component {
                 ? `You are a ${this.state.user.product} user!`
                 : `You are an ${this.state.user.product} user!`}
             </div>
+            <div>It looks like you're at {this.state.address.results[0].formatted_address}</div>
           </div>
         </div>
         {this.state.loggedIn ? (
@@ -161,9 +187,12 @@ class Home extends Component {
                 >
                   {artist.name}
                 </div>
-                {this.state.toggleEvents === artist.id ? 
-                <ArtistView artistName={artist.name}
-                toggleEvents={this.state.toggleEvents}/> : null}
+                {this.state.toggleEvents === artist.id ? (
+                  <ArtistView
+                    artistName={artist.name}
+                    toggleEvents={this.state.toggleEvents}
+                  />
+                ) : null}
               </div>
             ))}
           </div>
