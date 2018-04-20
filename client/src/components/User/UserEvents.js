@@ -1,23 +1,18 @@
 import React, { Component } from "react";
 class UserEvents extends Component {
   state = {
-    events: {
-      _embedded: {
-        events: [
-          {
-            name: ""
-          }
-        ]
-      }
-    }
+        events: [{
+            events: [{
+                name: ''
+            }]
+        }]
   };
 
   componentDidMount() {
-    this.getTopArtists();
-    // this.getEvents();
+    this.getTopArtistsEvents();
   }
 
-  getTopArtists = () => {
+  getTopArtistsEvents = () => {
     let params = this.props.getHashParams();
     let accessToken = params.access_token;
 
@@ -28,45 +23,31 @@ class UserEvents extends Component {
       .then(data => {
         //   this.setState({ userTop: data })
         const artist = data;
-        console.log(artist);
-        const artistResponse = artist.items.map(artistName =>
+        const allEvents = [];
+        artist.items.map(artistName =>
           fetch(
-            `https://app.ticketmaster.com/discovery/v2/events.json?apikey=udwfh91BymplrOZLNeV8nhVhMd032Xrn&keyword=${
-              artistName.name
-            }&startDateTime=2018-04-19T18:35:00Z&city=atlanta`
+            `https://rest.bandsintown.com/artists/${artistName.name}/events?app_id=698b530f4ba8c70ef531c9eae82e8204`
           )
             .then(response => response.json())
             .then(data => {
-              // console.log(data._embedded)
-              const event = data._embedded;
-              if (event) {
-                this.setState({ events: event });
+              const artistEvent = data;
+              if (artistEvent) {
+                allEvents.push(artistEvent);
               }
             })
         );
+        this.setState({ events: allEvents })
+        console.log(this.state)
       });
   };
-
-  //   getEvents = () => {
-  //     fetch(
-  //       `https://app.ticketmaster.com/discovery/v2/events.json?apikey=udwfh91BymplrOZLNeV8nhVhMd032Xrn&keyword=ttng&startDateTime=2018-04-19T18:35:00Z&city=atlanta`
-  //     )
-  //       .then(response => response.json())
-  //       .then(data => this.setState({ events: data }))
-  //       .then(data => console.log(this.state.events));
-  //   };
 
   render() {
     return (
       <div>
         <h1>user Events</h1>
-        {/* {this.state.events._embedded? (
-        <div>
-            {this.state.events._embedded.events.map(event => (
-          <div key={event.name}>{event.name}</div>
-        ))}
-        </div>
-        ) : null } */}
+        {this.state.events.map((event) => {
+            event._embedded? (<div>{event.events}</div>) : null
+        })}
       </div>
     );
   }
