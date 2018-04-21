@@ -172,7 +172,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <button
+        {this.state.loggedIn? null : ( <button
           onClick={() => {
             window.location = window.location.href.includes("localhost")
               ? "http://localhost:8888/login"
@@ -180,7 +180,8 @@ class Home extends Component {
           }}
         >
           Login with Spotify
-        </button>
+        </button> )}
+        
 
         <div>
           <div>
