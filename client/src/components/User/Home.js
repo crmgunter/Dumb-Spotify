@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
-import UserEvents from "./UserEvents";
 import ArtistView from "../Artists/ArtistView";
 import styled from "styled-components";
 
@@ -107,12 +106,11 @@ class Home extends Component {
         .then(response => response.json())
         .then(data => {
           this.setState({ user: data });
-          if (this.state.user.images[0]) {
-            const image = this.state.user.images[0].url;
+          if (this.state.user.images[0] && this.state.user.display_name) {
             const payload = {
               username: this.state.user.display_name,
               location: this.state.user.country,
-              image: image
+              image: this.state.user.images[0].url
             };
             console.log(payload);
             fetch(`/api/users`, {
@@ -126,7 +124,7 @@ class Home extends Component {
           }
           else {
             const payload = {
-              username: this.state.user.display_name,
+              username: this.state.user.email,
               location: this.state.user.country
             }
             fetch(`/api/users`, {
@@ -146,8 +144,9 @@ class Home extends Component {
     let params = this.getHashParams();
     let accessToken = params.access_token;
 
-    fetch("https://api.spotify.com/v1/me/top/artists", {
-      headers: { Authorization: `Bearer ${accessToken}` }
+    fetch("https://api.spotify.com/v1/me/top/artists?limit=50", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      "limit": 50
     })
       .then(response => response.json())
       .then(data => this.setState({ userTop: data }));
@@ -185,7 +184,6 @@ class Home extends Component {
 
         <div>
           <div>
-            {/* <img src={this.state.user.images[0].url} alt="user"/> */}
             {this.state.user.images[0] ? (
               <ImageStyles src={this.state.user.images[0].url} />
             ) : null}
@@ -235,15 +233,6 @@ class Home extends Component {
             ))}
           </div>
         ) : null}
-
-        <div>
-          {this.state.loggedIn ? (
-            <UserEvents
-              getHashParams={this.getHashParams}
-              userTop={this.state.userTop.items.map(item => item.name)}
-            />
-          ) : null}
-        </div>
       </div>
     );
   }
