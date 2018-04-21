@@ -32,14 +32,14 @@ class Home extends Component {
         ]
       },
       address: {
-        results: [{
-          formatted_address: ''
-        }]
+        results: [
+          {
+            formatted_address: ""
+          }
+        ]
       },
       data: {
-        results: [{
-
-        }]
+        results: [{}]
       },
       user: {
         images: [{}],
@@ -81,6 +81,7 @@ class Home extends Component {
     )
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         this.setState({ location: data });
         let lat = this.state.location.location.lat;
         let long = this.state.location.location.lng;
@@ -104,7 +105,40 @@ class Home extends Component {
         headers: { Authorization: `Bearer ${accessToken}` }
       })
         .then(response => response.json())
-        .then(data => this.setState({ user: data }));
+        .then(data => {
+          this.setState({ user: data });
+          if (this.state.user.images[0]) {
+            const image = this.state.user.images[0].url;
+            const payload = {
+              username: this.state.user.display_name,
+              location: this.state.user.country,
+              image: image
+            };
+            console.log(payload);
+            fetch(`/api/users`, {
+              method: "POST",
+              body: JSON.stringify(payload),
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": `application/json`
+              }
+            });
+          }
+          else {
+            const payload = {
+              username: this.state.user.display_name,
+              location: this.state.user.country
+            }
+            fetch(`/api/users`, {
+              method: "POST",
+              body: JSON.stringify(payload),
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": `application/json`
+              }
+            });
+          }
+        });
     }
   };
 
@@ -170,7 +204,10 @@ class Home extends Component {
                 ? `You are a ${this.state.user.product} user!`
                 : `You are an ${this.state.user.product} user!`}
             </div>
-            <div>It looks like you're at {this.state.address.results[0].formatted_address}</div>
+            <div>
+              It looks like you're at{" "}
+              {this.state.address.results[0].formatted_address}
+            </div>
           </div>
         </div>
         {this.state.loggedIn ? (
