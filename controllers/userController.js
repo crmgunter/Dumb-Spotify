@@ -16,7 +16,8 @@ router.post('/', (req, res) => {
     const newUser = new User({
         username: req.body.username,
         image: req.body.image,
-        location: req.body.location
+        location: req.body.location,
+        id: req.body.id
     })
     newUser.save().then(savedUser => {
         res.redirect(`/api/users`)

@@ -35,8 +35,25 @@ class ArtistView extends Component {
     return (
       <div>
         <button onClick={this.getEvents}>events</button>
-        {/* {console.log(this.state.events[0].id)} */}
-        {this.state.events[0] ? (
+        {/* {console.log(this.state.events[3])} */}
+        {this.state.events.map(event => (
+          <div>
+            {this.props.location.includes(event.venue.city) ? (
+              <div>
+                <div>{event.venue.name}</div>
+                <div>
+                  {event.venue.city}, {event.venue.region}
+                </div>
+                <div>{event.datetime}</div>
+              </div>
+            ) : null}
+          </div>
+        ))}
+
+        {/* THIS CODE DISPLAYS ALL EVENTS FOR ARTIST 
+        AND SHOULD BE SAVED FOR THE TIME BEING */}
+        {/* ===================================================================== */}
+        {/* {this.state.events[0] ? (
           <div>
             {this.state.events.map(event => (
               <div>
@@ -48,7 +65,9 @@ class ArtistView extends Component {
               </div>
             ))}
           </div>
-        ) : "This artist has no upcoming events near you."}
+        ) : (
+          "This artist has no upcoming events near you."
+        )} */}
       </div>
     );
   }

@@ -5,6 +5,7 @@ const userSchema = new Schema ({
     username: String,
     image: String,
     location: String,
+    id: String,
     playlists: [playlistScehma]
 })
 

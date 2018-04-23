@@ -13,6 +13,12 @@ const ArtistImage = styled.img`
   width: 200px;
 `;
 
+const Flex = styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+`
+
 const SpotifyWebApi = new Spotify();
 
 class Home extends Component {
@@ -110,7 +116,8 @@ class Home extends Component {
             const payload = {
               username: this.state.user.display_name,
               location: this.state.user.country,
-              image: this.state.user.images[0].url
+              image: this.state.user.images[0].url,
+              id: this.state.user.id
             };
             console.log(payload);
             fetch(`/api/users`, {
@@ -210,7 +217,7 @@ class Home extends Component {
           </div>
         </div>
         {this.state.loggedIn ? (
-          <div>
+          <Flex>
             {this.state.userTop.items.map(artist => (
               <div>
                 <div>
@@ -227,11 +234,12 @@ class Home extends Component {
                   <ArtistView
                     artistName={artist.name}
                     toggleEvents={this.state.toggleEvents}
+                    location={this.state.address.results[0].formatted_address}
                   />
                 ) : null}
               </div>
             ))}
-          </div>
+          </Flex>
         ) : null}
       </div>
     );
