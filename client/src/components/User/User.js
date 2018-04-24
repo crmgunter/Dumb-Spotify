@@ -35,7 +35,7 @@ class User extends Component {
   }
 
   componentDidMount() {
-    this.getUser();
+    // this.getUser();
     this.getSpotifyUser()
   }
 
@@ -50,12 +50,12 @@ class User extends Component {
         .then(data => console.log(this.state.spotifyUser.display_name));
   }
 
-  getUser = async () => {
-    const userId = this.props.match.params.userId;
-    const res = await axios.get(`/api/users/${userId}`);
-    console.log(res.data);
-    this.setState({ user: res.data });
-  };
+  // getUser = async () => {
+  //   const userId = this.props.match.params.userId;
+  //   const res = await axios.get(`/api/users/${userId}`);
+  //   console.log(res.data);
+  //   this.setState({ user: res.data });
+  // };
 
   toggleForm = () => {
     this.setState({ form: !this.state.form });
