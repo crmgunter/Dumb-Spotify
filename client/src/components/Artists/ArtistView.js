@@ -17,12 +17,6 @@ class ArtistView extends Component {
     noEvents: "There are no events near you."
   };
 
-  viewIsTrue = () => {
-    if (this.props.toggleEvents) {
-      this.setState({ view: true });
-    }
-  };
-
   getEvents = () => {
     fetch(
       `https://rest.bandsintown.com/artists/${
@@ -38,6 +32,7 @@ class ArtistView extends Component {
   };
 
   getLocalEvents = () => {
+    this.setState({ view: !this.state.view})
     const locationArray = [];
     const notLocationArray = [];
 
@@ -55,9 +50,6 @@ class ArtistView extends Component {
   };
 
   render() {
-    //   this.getEvents()
-    
-
     return (
       <div>
         <button onClick={this.getEvents}>events</button>
@@ -88,17 +80,21 @@ class ArtistView extends Component {
             console.log(notLocationArray)
           }
         })} */}
-        {this.state.userLocationEvents ? (
+        {this.state.view ? (
         <div>
-        {this.state.userLocationEvents.map((event) => (
+        {this.state.userLocationEvents ? (
           <div>
-            <div>{event.venue.name}</div>
-            <div>{event.venue.city}, {event.venue.region}</div>
-            <div>{event.datetime}</div>
+          {this.state.userLocationEvents.map((event) => (
+            <div>
+              <div>{event.venue.name}</div>
+              <div>{event.venue.city}, {event.venue.region}</div>
+              <div>{event.datetime}</div>
+            </div>
+          ))}  
           </div>
-        ))}  
-        </div>
-        ) : (<div>Go fuck yourself</div>)}
+          ) : (<div>This artist has no upcoming events near you.</div>)}
+        </div>) : null}
+        
 
 
         {/* THIS CODE DISPLAYS ALL EVENTS FOR ARTIST 
