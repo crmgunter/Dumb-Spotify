@@ -53,33 +53,6 @@ class ArtistView extends Component {
     return (
       <div>
         <button onClick={this.getEvents}>events</button>
-        {/* {console.log(this.state.events[3])} */}
-        {/* {this.state.events[0] ? (<div>
-          {this.state.events.map((event, index) => (
-          <div key={event.id}>
-            {this.props.location.includes(event.venue.city) ? (
-              <div>
-                <div>{event.venue.name}</div>
-                <div>
-                  {event.venue.city}, {event.venue.region}
-                </div>
-                <div>{event.datetime}</div>
-                <div><a href={event.url}>Get tickets</a></div>
-              </div>
-            ) : (<div>There are no upcoming shows near you.</div>)}
-          </div>
-        ))}
-        </div>) : (<div>There are no upcoming events near you.</div>)} */}
-
-        {/* {this.state.events.map((event) => {
-          if(this.props.location.includes(event.venue.city)) {
-            locationArray.push(event)
-          console.log(locationArray)
-          } else {
-            notLocationArray.push(event)
-            console.log(notLocationArray)
-          }
-        })} */}
         {this.state.view ? (
         <div>
         {this.state.userLocationEvents ? (
