@@ -5,9 +5,8 @@ const HeaderStyle = styled.div`
 height: 100px;
 width: 100vw;
 display: flex;
-border-bottom: 1px solid seashell;
 margin-bottom: 0;
-background: #22252C;
+background: #e14658;
 color: seashell;
 `
 

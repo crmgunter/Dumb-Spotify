@@ -5,6 +5,7 @@ import User from "./components/User/User";
 import Playlist from "./components/Playlist/Playlist";
 import Song from "./components/Song";
 import Header from "./components/Header";
+import Footer from './components/Footer'
 import styled from "styled-components";
 
 const General = styled.div`
@@ -44,6 +45,7 @@ class App extends Component {
                 component={Song}
               />
             </Switch>
+            <Footer/>
           </div>
         </Router>
       </General>

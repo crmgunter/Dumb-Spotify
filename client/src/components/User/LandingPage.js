@@ -59,10 +59,6 @@ const PageContent = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
   flex-wrap: wrap;
 `;
 
@@ -75,16 +71,27 @@ const ImageLeft = styled.div`
 `;
 
 const ContentBlocks = styled.div`
-  height: 75vh;
+  min-height: 80vh;
   width: 40vw;
-  background: #e14658;
+  background: seashell;
+  color: black;
   margin: auto;
+  display: flex;
+  justify-content: center;
+`;
+
+const ContentFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
 `;
 
 class LandingPage extends Component {
   scrollDown = () => {
     window.scroll({
-      top: 1000,
+      top: 770,
       behavior: "smooth"
     });
     const animate = document.getElementsByClassName("revealOnScroll");
@@ -127,7 +134,28 @@ class LandingPage extends Component {
           <PageContent>
             <ImageLeft />
             <ContentBlocks className="animated fadeInUpBig">
-              <div>Hi!</div>
+              <ContentFlex>
+                <div>
+                  <h1>Track Your Favorite Artists</h1>
+                  <p>
+                    This app uses the Spotify API to access a Spotify User's
+                    account information.
+                    <br />
+                    <br />
+                    Using Spotify's data, it analyzes your top Artists and gives
+                    you access to your playlists.
+                  </p>
+                </div>
+                <div>
+                  <h1>Find Events Near You</h1>
+                  <p>
+                    Once the app has located your favorite artists, it uses the
+                    Bands In Town API and the Google Maps API to search for your
+                    location and any upcoming shows those artists have coming up
+                    in your area.
+                  </p>
+                </div>
+              </ContentFlex>
             </ContentBlocks>
           </PageContent>
         </ScrollAnimation>
