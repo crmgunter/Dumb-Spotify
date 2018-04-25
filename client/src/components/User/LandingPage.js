@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import ScrollAnimation from 'react-animate-on-scroll'
-
+import ScrollAnimation from "react-animate-on-scroll";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faCoffee from "@fortawesome/fontawesome-free-solid/faCoffee";
+import faArrowCircleDown from "@fortawesome/fontawesome-free-solid/faArrowCircleDown";
 const LandingImage = styled.div`
   background-image: url("https://images.unsplash.com/photo-1522791194246-7129e9750305?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55c772c62c24b498d3a2202f9b06435c&auto=format&fit=crop&w=800&q=60");
   height: 100vh;
@@ -24,21 +26,32 @@ const ButtonCenter = styled.div`
   margin: auto;
   text-align: center;
   background: rgba(34, 37, 44, 0.5);
-  height: 30vh;
+  min-height: 30vh;
   width: 50vw;
   padding: 20px;
   border-radius: 5px;
+
+  .iconStyle {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+    cursor: pointer;
+  }
 `;
 
 const ButtonStyle = styled.button`
   padding: 20px;
   background: none;
-  color: seashell;
+  color: #e14658;
   font-size: 13px;
   border-radius: 5px;
+  border: #e14658 solid 1px;
 
   :hover {
-    background: blue;
+    background: #e14658;
+    color: seashell;
+    border: 1px solid seashell;
+    cursor: pointer;
   }
 `;
 
@@ -49,9 +62,17 @@ const PageContent = styled.div`
 `;
 
 const ContentContainer = styled.div`
-display:flex;
-flex-wrap: wrap;
-`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const ImageLeft = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1514471157964-06459a4b9241?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e049b4af8dbdf11a11434502f84dbbc2&auto=format&fit=crop&w=800&q=60");
+  height: 100vh;
+  width: 50vw;
+  background-position: center;
+  background-size: cover;
+`;
 
 const ContentBlocks = styled.div`
   height: 75vh;
@@ -66,8 +87,8 @@ class LandingPage extends Component {
       top: 1000,
       behavior: "smooth"
     });
-    const animate = document.getElementsByClassName('revealOnScroll');
-    console.log(animate)
+    const animate = document.getElementsByClassName("revealOnScroll");
+    console.log(animate);
   };
 
   render() {
@@ -92,19 +113,23 @@ class LandingPage extends Component {
               >
                 Login with Spotify
               </ButtonStyle>
-              <button onClick={this.scrollDown}>Down</button>
+              <div>
+                <FontAwesomeIcon
+                  icon={faArrowCircleDown}
+                  class="iconStyle"
+                  onClick={this.scrollDown}
+                />
+              </div>
             </ButtonCenter>
           </LetsSee>
         </LandingImage>
         <ScrollAnimation animateIn="fadeInLeftBig">
-        <PageContent>
-            
-          <ContentBlocks>
-          </ContentBlocks>
-          <ContentBlocks>
-            <div>Hi!</div>
-          </ContentBlocks>
-        </PageContent>
+          <PageContent>
+            <ImageLeft />
+            <ContentBlocks className="animated fadeInUpBig">
+              <div>Hi!</div>
+            </ContentBlocks>
+          </PageContent>
         </ScrollAnimation>
       </div>
     );
