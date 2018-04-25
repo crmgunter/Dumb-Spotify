@@ -10,8 +10,8 @@ import styled from "styled-components";
 const General = styled.div`
   min-height: 100vh;
   text-align: center;
-  background: #181818;
-  color: #00e155;
+  background: #22252C;
+  color: seashell;
 
   a {
     text-decoration: none;

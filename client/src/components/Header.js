@@ -6,7 +6,9 @@ height: 100px;
 width: 100vw;
 display: flex;
 border-bottom: 1px solid seashell;
-margin-bottom: 20px;
+margin-bottom: 0;
+background: #22252C;
+color: seashell;
 `
 
 const Center = styled.div`
