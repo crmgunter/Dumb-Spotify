@@ -40,11 +40,9 @@ class ArtistView extends Component {
       if (this.props.location.includes(event.venue.city)) {
         locationArray.push(event);
         this.setState({userLocationEvents : locationArray})
-        console.log(locationArray);
       } else {
         notLocationArray.push(event);
         this.setState({ noUserLocationEvents: notLocationArray})
-        console.log(notLocationArray);
       }
     });
   };

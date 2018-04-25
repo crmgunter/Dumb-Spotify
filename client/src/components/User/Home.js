@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 import ArtistView from "../Artists/ArtistView";
 import styled from "styled-components";
+import LandingPage from "./LandingPage";
 
 const ImageStyles = styled.img`
   border-radius: 50%;
@@ -17,6 +18,10 @@ const Flex = styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
+
+.fromRight {
+  animation-duration: 2s;
+}
 `
 
 const SpotifyWebApi = new Spotify();
@@ -178,19 +183,9 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {this.state.loggedIn? null : ( <button
-          onClick={() => {
-            window.location = window.location.href.includes("localhost")
-              ? "http://localhost:8888/login"
-              : "https://cg-final-backend.herokuapp.com/login";
-          }}
-        >
-          Login with Spotify
-        </button> )}
-        
-
-        <div>
+        {this.state.loggedIn? (<div>
           <div>
+          <div className="animated fadeInLeftBig">
             {this.state.user.images[0] ? (
               <ImageStyles src={this.state.user.images[0].url} />
             ) : null}
@@ -219,7 +214,7 @@ class Home extends Component {
         {this.state.loggedIn ? (
           <Flex>
             {this.state.userTop.items.map(artist => (
-              <div>
+              <div className="fromRight animated fadeInRightBig">
                 <div>
                   <ArtistImage src={artist.images[0].url} />
                 </div>
@@ -241,6 +236,16 @@ class Home extends Component {
             ))}
           </Flex>
         ) : null}
+        </div>) : ( 
+        <div>
+        
+        <LandingPage/>
+        </div>
+        )
+        }
+        
+
+        
       </div>
     );
   }
