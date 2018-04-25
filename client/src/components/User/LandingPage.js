@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import ScrollAnimation from 'react-animate-on-scroll'
 
 const LandingImage = styled.div`
   background-image: url("https://images.unsplash.com/photo-1522791194246-7129e9750305?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55c772c62c24b498d3a2202f9b06435c&auto=format&fit=crop&w=800&q=60");
@@ -95,17 +96,16 @@ class LandingPage extends Component {
             </ButtonCenter>
           </LetsSee>
         </LandingImage>
+        <ScrollAnimation animateIn="fadeInLeftBig">
         <PageContent>
-          <ContentBlocks
-            className="revealOnScroll"
-            data-animation="fadeInLeftBig"
-          >
-            <div>OH hey</div>
+            
+          <ContentBlocks>
           </ContentBlocks>
           <ContentBlocks>
             <div>Hi!</div>
           </ContentBlocks>
         </PageContent>
+        </ScrollAnimation>
       </div>
     );
   }
