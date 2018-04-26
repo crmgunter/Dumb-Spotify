@@ -15,14 +15,56 @@ const ArtistImage = styled.img`
 `;
 
 const Flex = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 
-.fromRight {
-  animation-duration: 2s;
-}
-`
+  .fromRight {
+    animation-duration: 2s;
+  }
+`;
+
+const TopContent = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .fadeInDownBig {
+    animation-duration: 2s;
+  }
+`;
+
+const UserInfo = styled.div`
+  margin: 20px;
+  max-width: 40vw;
+
+ 
+`;
+
+const ButtonFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+
+`;
+
+const ButtonStyle = styled.button`
+  min-width: 100px;
+  margin: 10px;
+  padding: 15px;
+  background: none;
+  color: #e14658;
+  font-size: 13px;
+  border-radius: 5px;
+  border: #e14658 solid 1px;
+
+  :hover {
+    background: #e14658;
+    color: seashell;
+    border: 1px solid seashell;
+    cursor: pointer;
+  }
+`;
 
 const SpotifyWebApi = new Spotify();
 
@@ -133,12 +175,11 @@ class Home extends Component {
                 "Content-Type": `application/json`
               }
             });
-          }
-          else {
+          } else {
             const payload = {
               username: this.state.user.email,
               location: this.state.user.country
-            }
+            };
             fetch(`/api/users`, {
               method: "POST",
               body: JSON.stringify(payload),
@@ -158,7 +199,7 @@ class Home extends Component {
 
     fetch("https://api.spotify.com/v1/me/top/artists?limit=50", {
       headers: { Authorization: `Bearer ${accessToken}` },
-      "limit": 50
+      limit: 50
     })
       .then(response => response.json())
       .then(data => this.setState({ userTop: data }));
@@ -183,69 +224,81 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {this.state.loggedIn? (<div>
-          <div>
-          <div className="animated fadeInLeftBig">
-            {this.state.user.images[0] ? (
-              <ImageStyles src={this.state.user.images[0].url} />
-            ) : null}
-            <div>
-              {this.state.user.display_name ? (
-                <div>
-                  <Link to={`users/${this.state.user.id}`}>
-                    Hello, {this.state.user.display_name.split(" ")[0]}!
-                  </Link>
-                </div>
-              ) : (
-                <Link to={`users/${this.state.user.id}`}>
-                  <div>Go to user</div>
-                </Link>
-              )}
-              {this.state.user.product === "premium"
-                ? `You are a ${this.state.user.product} user!`
-                : `You are an ${this.state.user.product} user!`}
-            </div>
-            <div>
-              It looks like you're at{" "}
-              {this.state.address.results[0].formatted_address}
-            </div>
-          </div>
-        </div>
         {this.state.loggedIn ? (
-          <Flex>
-            {this.state.userTop.items.map(artist => (
-              <div className="fromRight animated fadeInRightBig">
+          <div>
+            <TopContent>
+              <UserInfo>
+                <div className="animated fadeInLeftBig">
+                  {this.state.user.images[0] ? (
+                    <ImageStyles src={this.state.user.images[0].url} />
+                  ) : null}
+                  <div>
+                    {this.state.user.display_name ? (
+                      <div>
+                        <Link to={`users/${this.state.user.id}`}>
+                          Hello, {this.state.user.display_name.split(" ")[0]}!
+                        </Link>
+                      </div>
+                    ) : (
+                      <Link to={`users/${this.state.user.id}`}>
+                        <div>Go to user</div>
+                      </Link>
+                    )}
+                    {this.state.user.product === "premium"
+                      ? `You are a ${this.state.user.product} user!`
+                      : `You are an ${this.state.user.product} user!`}
+                  </div>
+                  <div>
+                    It looks like you're at{" "}
+                    {this.state.address.results[0].formatted_address}
+                  </div>
+                </div>
+              </UserInfo>
+              <ButtonFlex className="fadeInDownBig">
                 <div>
-                  <ArtistImage src={artist.images[0].url} />
+                  <ButtonStyle>Playlists</ButtonStyle>
                 </div>
-                <div
-                  onClick={() => {
-                    this.toggleEvents(artist.id);
-                  }}
-                >
-                  {artist.name}
+                <div>
+                  <ButtonStyle>Top Artists</ButtonStyle>
                 </div>
-                {this.state.toggleEvents === artist.id ? (
-                  <ArtistView
-                    artistName={artist.name}
-                    toggleEvents={this.state.toggleEvents}
-                    location={this.state.address.results[0].formatted_address}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </Flex>
-        ) : null}
-        </div>) : ( 
-        <div>
-        
-        <LandingPage/>
-        </div>
-        )
-        }
-        
-
-        
+                <div>
+                  <ButtonStyle>Top Tracks</ButtonStyle>
+                </div>
+              </ButtonFlex>
+            </TopContent>
+            {this.state.loggedIn ? (
+              <Flex>
+                {this.state.userTop.items.map(artist => (
+                  <div className="fromRight animated fadeInRightBig">
+                    <div>
+                      <ArtistImage src={artist.images[0].url} />
+                    </div>
+                    <div
+                      onClick={() => {
+                        this.toggleEvents(artist.id);
+                      }}
+                    >
+                      {artist.name}
+                    </div>
+                    {this.state.toggleEvents === artist.id ? (
+                      <ArtistView
+                        artistName={artist.name}
+                        toggleEvents={this.state.toggleEvents}
+                        location={
+                          this.state.address.results[0].formatted_address
+                        }
+                      />
+                    ) : null}
+                  </div>
+                ))}
+              </Flex>
+            ) : null}
+          </div>
+        ) : (
+          <div>
+            <LandingPage />
+          </div>
+        )}
       </div>
     );
   }
