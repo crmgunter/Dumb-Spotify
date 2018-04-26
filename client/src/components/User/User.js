@@ -4,6 +4,10 @@ import Spotify from 'spotify-web-api-js'
 import UserPlaylists from "./UserPlaylists";
 import styled from 'styled-components'
 
+const Body = styled.div`
+min-height: 100vh;
+`
+
 const ImageStyles = styled.img`
   border-radius: 50%;
   margin: 20px;
@@ -67,7 +71,7 @@ class User extends Component {
 
   render() {
     return (
-      <div>
+      <Body>
         <div>
           <div>
             {this.state.spotifyUser.images[0] ? (<div><ImageStyles src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
@@ -78,7 +82,7 @@ class User extends Component {
         </div>
         <UserPlaylists
         userId={this.state.spotifyUser.id}/>
-      </div>
+      </Body>
     );
   }
 }

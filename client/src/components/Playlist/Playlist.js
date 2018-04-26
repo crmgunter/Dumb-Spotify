@@ -4,6 +4,10 @@ import Search from "./Search";
 import EditPlaylistForm from "./EditPlaylistForm";
 import styled from 'styled-components'
 
+const Body = styled.div`
+min-height: 100vh;
+`
+
 const FlexContainer = styled.div`
 display: flex;
 justify-content: space-around;
@@ -117,7 +121,7 @@ class Playlist extends Component {
 
   render() {
     return (
-      <div>
+      <Body>
         <FlexContainer>
             <div>
           <iframe
@@ -135,8 +139,6 @@ class Playlist extends Component {
         </div>
 
         <div>
-          {/* IMPORTANT!!!
-         IF USER PLAYLIST WAS NOT MADE BY THE USER SIGNED IN, IT WILL ERROR OUT! */}
          <h1>{this.state.playlist.name}</h1>
          <button onClick={this.toggleForm}>Edit</button>
         {this.state.editForm ? (
@@ -178,7 +180,7 @@ class Playlist extends Component {
             getTracks={this.getTracks}
           />
         </div>
-      </div>
+      </Body>
     );
   }
 }

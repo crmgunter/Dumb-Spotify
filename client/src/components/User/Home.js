@@ -6,6 +6,10 @@ import styled from "styled-components";
 import LandingPage from "./LandingPage";
 import TopTracks from './TopTracks'
 
+const Body = styled.div`
+min-height: 100vh;
+`
+
 const ImageStyles = styled.img`
   border-radius: 50%;
 `;
@@ -78,7 +82,6 @@ class Home extends Component {
     const params = this.getHashParams();
     this.state = {
       loggedIn: params.access_token ? true : false,
-      users: [],
       userTopView: false,
       userTopTrackView: false,
       userTop: {
@@ -232,8 +235,7 @@ class Home extends Component {
     let accessToken = params.access_token;
 
     fetch("https://api.spotify.com/v1/me/top/tracks?limit=52", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      limit: 50
+      headers: { Authorization: `Bearer ${accessToken}` }
     })
       .then(response => response.json())
       .then(data => this.setState({ userTopTracks: data }));
@@ -253,6 +255,7 @@ class Home extends Component {
 
   render() {
     return (
+      <Body>
       <div>
         {this.state.loggedIn ? (
           <div>
@@ -299,8 +302,8 @@ class Home extends Component {
                 </div>
                 <div>
                   <ButtonStyle onClick={this.getTopTracks}>Top Tracks</ButtonStyle>
-                  {this.state.userTopTrackView? (<TopTracks topTracks={this.state.userTopTracks}/>) : null}
                 </div>
+                
               </ButtonFlex>
             </TopContent>
             {/* ============================================== */}
@@ -309,6 +312,7 @@ class Home extends Component {
             {/* BEGIN TOP ARTISTS */}
             {this.state.loggedIn && this.state.userTopView ? (
               <Flex>
+                {this.state.userTopTrackView? (<TopTracks topTracks={this.state.userTopTracks}/>) : null}
                 {this.state.userTop.items.map(artist => (
                   <ArtistContainer className="fromRight animated fadeInRightBig">
                       <ArtistImage src={artist.images[0].url} />                    
@@ -341,6 +345,7 @@ class Home extends Component {
           </div>
         )}
       </div>
+      </Body>
     );
   }
 }
