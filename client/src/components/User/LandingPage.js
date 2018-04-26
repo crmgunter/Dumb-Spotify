@@ -115,7 +115,7 @@ const ContentFlex = styled.div`
 class LandingPage extends Component {
   scrollDown = () => {
     window.scroll({
-      top: 770,
+      top: 948,
       behavior: "smooth"
     });
     const animate = document.getElementsByClassName("revealOnScroll");
