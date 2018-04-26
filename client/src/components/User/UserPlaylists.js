@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import NewPlaylistForm from "../Playlist/NewPlaylistForm";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const ImageStyles = styled.img`
   border-radius: 50%;
 `;
 
 const ImageSize = styled.img`
-width: 200px;
-height: 200px;
-`
+  width: 200px;
+  height: 200px;
+`;
 
 const FlexContainer = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
 
 const ButtonStyle = styled.button`
   min-width: 100px;
@@ -48,11 +48,18 @@ const ArtistContainer = styled.div`
 class UserPlaylists extends Component {
   state = {
     playlists: {
-      items: [{
-        images: [{
-          url: ''
-        }]
-      }]
+      items: [
+        {
+          images: [
+            {
+              url: ""
+            }
+          ],
+          owner: {
+            id: ""
+          }
+        }
+      ]
     },
     newForm: false,
     confirmUnfollow: false
@@ -71,52 +78,77 @@ class UserPlaylists extends Component {
       .then(data => this.setState({ playlists: data }));
   };
 
-  unfollowPlaylist = (id) => {
-    const userId = this.props.userId
-    console.log(userId)
-    const playlistId = id
-    console.log(playlistId)
+  unfollowPlaylist = id => {
+    const userId = this.props.userId;
+    console.log(userId);
+    const playlistId = id;
+    console.log(playlistId);
     const token = localStorage.getItem("token");
-    console.log(token)
-    fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/followers`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    this.getPlaylists()
-}
+    console.log(token);
+    fetch(
+      `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/followers`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+    this.getPlaylists();
+  };
 
   toggleForm = () => {
-    this.setState({ newForm: !this.state.newForm })
-  }
+    this.setState({ newForm: !this.state.newForm });
+  };
 
   areYouSure = () => {
-    this.setState({ confirmUnfollow: !this.state.confirmUnfollow })
-  }
+    this.setState({ confirmUnfollow: !this.state.confirmUnfollow });
+  };
 
   render() {
     return (
       <div>
         <ButtonStyle onClick={this.toggleForm}>New Playlist</ButtonStyle>
-        {this.state.newForm? (<NewPlaylistForm 
-       userId={this.props.userId}
-       getPlaylists={this.getPlaylists}/>) : null}
+        {this.state.newForm ? (
+          <NewPlaylistForm
+            userId={this.props.userId}
+            getPlaylists={this.getPlaylists}
+          />
+        ) : null}
 
-       <FlexContainer>
-        {this.state.playlists.items.map(playlist => (
-          <ArtistContainer>
-            {/* IF A PICTURE EXISTS, THIS WILL PULL IN THE PICTURE */}
-            <div>{playlist.images[0]? (<ImageSize src={playlist.images[0].url} />) : null}</div>
-            <Link to={`/users/${this.props.userId}/playlists/${playlist.id}`}>
-              {playlist.name}
-            </Link>
-            <div>
-            <ButtonStyle onClick={this.areYouSure}>Unfollow</ButtonStyle>
-            {this.state.confirmUnfollow ? (<div><ButtonStyle onClick={() => {this.unfollowPlaylist(playlist.id)}}>Yes</ButtonStyle>
-            <ButtonStyle onClick={this.areYouSure}>No</ButtonStyle></div>) : null}
+        <FlexContainer>
+          {this.state.playlists.items.map((playlist) => (
+            playlist.owner.id === this.props.userId ? (<div>
+              <div>
+              {console.log(playlist.owner.id === this.props.userId ? (console.log(true)) : (console.log(false, playlist.name)))}
+              <ArtistContainer>
+                <div>
+                  {playlist.images[0] ? (
+                    <ImageSize src={playlist.images[0].url} />
+                  ) : null}
+                </div>
+                <Link
+                  to={`/users/${this.props.userId}/playlists/${playlist.id}`}
+                >
+                  {playlist.name}
+                </Link>
+                <div>
+                  <ButtonStyle onClick={this.areYouSure}>Unfollow</ButtonStyle>
+                  {this.state.confirmUnfollow ? (
+                    <div>
+                      <ButtonStyle
+                        onClick={() => {
+                          this.unfollowPlaylist(playlist.id);
+                        }}
+                      >
+                        Yes
+                      </ButtonStyle>
+                      <ButtonStyle onClick={this.areYouSure}>No</ButtonStyle>
+                    </div>
+                  ) : null}
+                </div>
+              </ArtistContainer>
             </div>
-            
-          </ArtistContainer>
-        ))}
+            </div>) : null
+   ))}
         </FlexContainer>
       </div>
     );

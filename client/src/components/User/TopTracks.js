@@ -13,43 +13,9 @@ const Flex = styled.div`
   margin: 20px;
 `;
 
-const TopContent = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-
-  .fadeInDownBig {
-    animation-duration: 2s;
-  }
-`;
-
 const UserInfo = styled.div`
   margin: 20px;
   max-width: 300px;
-`;
-
-const ButtonFlex = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonStyle = styled.button`
-  min-width: 100px;
-  margin: 10px;
-  padding: 15px;
-  background: none;
-  color: #e14658;
-  font-size: 13px;
-  border-radius: 5px;
-  border: #e14658 solid 1px;
-
-  :hover {
-    background: #e14658;
-    color: seashell;
-    border: 1px solid seashell;
-    cursor: pointer;
-  }
 `;
 
 const ArtistContainer = styled.div`
