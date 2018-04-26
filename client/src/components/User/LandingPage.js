@@ -67,7 +67,25 @@ const ImageLeft = styled.div`
   width: 50vw;
   background-position: center;
   background-size: cover;
+
+  @media only screen and (max-width: 600px) {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
 `;
+
+const RightContent = styled.div`
+height: 100vh;
+width: 50vw;
+display: flex;
+
+@media only screen and (max-width: 600px) {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+`
 
 const ContentBlocks = styled.div`
   min-height: 80vh;
@@ -78,6 +96,12 @@ const ContentBlocks = styled.div`
   margin: auto;
   display: flex;
   justify-content: center;
+
+  @media only screen and (max-width: 600px) {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
 `;
 
 const ContentFlex = styled.div`
@@ -132,7 +156,8 @@ class LandingPage extends Component {
         </LandingImage>
         <ScrollAnimation animateIn="fadeInLeftBig">
           <PageContent>
-            <ImageLeft />
+            
+            <RightContent>
             <ContentBlocks>
               <ContentFlex>
                 <div>
@@ -157,6 +182,8 @@ class LandingPage extends Component {
                 </div>
               </ContentFlex>
             </ContentBlocks>
+            </RightContent>
+            <ImageLeft />
           </PageContent>
         </ScrollAnimation>
       </div>
