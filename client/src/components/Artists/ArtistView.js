@@ -34,6 +34,10 @@ class ArtistView extends Component {
     allShows: false
   };
 
+  componentDidMount() {
+    this.getEvents()
+  }
+
   getEvents = () => {
     fetch(
       `https://rest.bandsintown.com/artists/${
@@ -71,7 +75,8 @@ class ArtistView extends Component {
   render() {
     return (
       <div>
-        <ButtonStyle onClick={this.getEvents}>events</ButtonStyle>
+        {/* <ButtonStyle onClick={this.getEvents}>events</ButtonStyle> */}
+        
         {this.state.view ? (
         <div>
         {this.state.userLocationEvents ? (

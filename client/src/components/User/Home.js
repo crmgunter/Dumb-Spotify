@@ -314,12 +314,14 @@ class Home extends Component {
               <Flex>
                 {this.state.userTopTrackView? (<TopTracks topTracks={this.state.userTopTracks}/>) : null}
                 {this.state.userTop.items.map(artist => (
-                  <ArtistContainer className="fromRight animated fadeInRightBig">
+                  <ArtistContainer
+                  onClick={() => {
+                    this.toggleEvents(artist.id);
+                  }}
+                  className="fromRight animated fadeInRightBig">
                       <ArtistImage src={artist.images[0].url} />                    
                     <div
-                      onClick={() => {
-                        this.toggleEvents(artist.id);
-                      }}
+                      
                     >
                       {artist.name}
                     </div>
