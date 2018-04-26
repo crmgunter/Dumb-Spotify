@@ -7,6 +7,11 @@ height: 200px;
 width: 200px;
 `
 
+const Body = styled.div`
+min-height: 100vh;
+margin: 20px;
+`
+
 class Song extends Component {
     state = {
         track: {
@@ -47,13 +52,8 @@ class Song extends Component {
 
     render() {
         return (
-            <div>
-                {/* <h1>Hey from song</h1>
-                {this.state.song.name}
-                {this.state.song.artist}
-                {this.state.song.album}
-                {this.state.song.genre}
-                <img src={this.state.song.albumImage}/> */}
+            <Body>
+                
                 {<ImageSize src={this.state.track.album.images[0].url} />}
                 <div>
                 {this.state.track.name}
@@ -64,7 +64,7 @@ class Song extends Component {
                 <div>
                 {this.state.track.album.name}
                 </div>
-            </div>
+            </Body>
         );
     }
 }

@@ -36,6 +36,24 @@ const ButtonStyle = styled.button`
   }
 `;
 
+const PlaylistButtonStyle = styled.button`
+  min-width: 100px;
+  margin: 10px;
+  padding: 15px;
+  background: none;
+  color: seashell;
+  font-size: 13px;
+  border-radius: 5px;
+  border: seashell solid 1px;
+
+  :hover {
+    background: seashell;
+    color: #22252C;
+    border: 1px solid #22252C;
+    cursor: pointer;
+  }
+`;
+
 const ArtistContainer = styled.div`
   border: 1px solid #e14658;
   margin: 10px 5px;
@@ -127,8 +145,9 @@ class UserPlaylists extends Component {
                 </div>
                 <Link
                   to={`/users/${this.props.userId}/playlists/${playlist.id}`}
-                >
+                ><PlaylistButtonStyle>
                   {playlist.name}
+                  </PlaylistButtonStyle>
                 </Link>
                 <div>
                   <ButtonStyle onClick={this.areYouSure}>Unfollow</ButtonStyle>

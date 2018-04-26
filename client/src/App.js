@@ -16,7 +16,7 @@ const General = styled.div`
 
   a {
     text-decoration: none;
-    color: #00e155;
+    color: seashell;
   }
 
   h1 {

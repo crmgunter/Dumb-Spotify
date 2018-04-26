@@ -9,12 +9,6 @@ const Body = styled.div`
   margin: 20px;
 `;
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-`;
-
 const SongFlex = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -145,7 +139,7 @@ class Playlist extends Component {
   render() {
     return (
       <Body>
-        <FlexContainer>
+        <div>
           <div>
             <iframe
               src={`https://open.spotify.com/embed?uri=${
@@ -197,7 +191,7 @@ class Playlist extends Component {
               ))}
             </SongFlex>
           </div>
-        </FlexContainer>
+        </div>
         <div>
           <Search
             userId={this.props.match.params.userId}

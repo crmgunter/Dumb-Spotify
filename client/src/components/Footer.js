@@ -9,11 +9,19 @@ background: #e14658;
 color: seashell;
 `
 
+const Center = styled.div`
+margin: auto;
+`
+
 class Footer extends Component {
     render() {
         return (
             <FooterStyle>
-                <h1>hey</h1>
+                <Center>
+                    <div>
+                        <a href="https://github.com/crmgunter/final-project-express"><h3>See the code!</h3></a>
+                    </div>
+                    </Center>
             </FooterStyle>
         );
     }
