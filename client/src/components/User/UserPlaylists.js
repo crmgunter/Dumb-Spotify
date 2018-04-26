@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import NewPlaylistForm from "../Playlist/NewPlaylistForm";
 import styled from 'styled-components'
 
+const ImageStyles = styled.img`
+  border-radius: 50%;
+`;
+
 const ImageSize = styled.img`
 width: 200px;
 height: 200px;
@@ -14,6 +18,33 @@ flex-wrap: wrap;
 justify-content: space-around;
 `
 
+const ButtonStyle = styled.button`
+  min-width: 100px;
+  margin: 10px;
+  padding: 15px;
+  background: none;
+  color: #e14658;
+  font-size: 13px;
+  border-radius: 5px;
+  border: #e14658 solid 1px;
+
+  :hover {
+    background: #e14658;
+    color: seashell;
+    border: 1px solid seashell;
+    cursor: pointer;
+  }
+`;
+
+const ArtistContainer = styled.div`
+  border: 1px solid #e14658;
+  margin: 10px 5px;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 220px;
+  min-width: 220px;
+`;
+
 class UserPlaylists extends Component {
   state = {
     playlists: {
@@ -23,7 +54,8 @@ class UserPlaylists extends Component {
         }]
       }]
     },
-    newForm: false
+    newForm: false,
+    confirmUnfollow: false
   };
 
   componentDidMount() {
@@ -57,25 +89,33 @@ class UserPlaylists extends Component {
     this.setState({ newForm: !this.state.newForm })
   }
 
+  areYouSure = () => {
+    this.setState({ confirmUnfollow: !this.state.confirmUnfollow })
+  }
+
   render() {
     return (
       <div>
-        <h1>playlists:</h1>
-        <button onClick={this.toggleForm}>New Playlist</button>
+        <ButtonStyle onClick={this.toggleForm}>New Playlist</ButtonStyle>
         {this.state.newForm? (<NewPlaylistForm 
        userId={this.props.userId}
        getPlaylists={this.getPlaylists}/>) : null}
 
        <FlexContainer>
         {this.state.playlists.items.map(playlist => (
-          <div>
+          <ArtistContainer>
             {/* IF A PICTURE EXISTS, THIS WILL PULL IN THE PICTURE */}
             <div>{playlist.images[0]? (<ImageSize src={playlist.images[0].url} />) : null}</div>
             <Link to={`/users/${this.props.userId}/playlists/${playlist.id}`}>
               {playlist.name}
             </Link>
-            <p onClick={() => {this.unfollowPlaylist(playlist.id)}}>X</p>
-          </div>
+            <div>
+            <ButtonStyle onClick={this.areYouSure}>Unfollow</ButtonStyle>
+            {this.state.confirmUnfollow ? (<div><ButtonStyle onClick={() => {this.unfollowPlaylist(playlist.id)}}>Yes</ButtonStyle>
+            <ButtonStyle onClick={this.areYouSure}>No</ButtonStyle></div>) : null}
+            </div>
+            
+          </ArtistContainer>
         ))}
         </FlexContainer>
       </div>

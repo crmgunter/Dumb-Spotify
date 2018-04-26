@@ -101,20 +101,13 @@ class ArtistView extends Component {
             ))}
           </div>
         ) : (
-          "This artist has no upcoming events near you."
+          "I already told you, this artist has no upcoming events near you."
         )}
               </div>
             ) : null}
           </div>
           )}
         </div>) : null}
-        
-
-
-        {/* THIS CODE DISPLAYS ALL EVENTS FOR ARTIST 
-        AND SHOULD BE SAVED FOR THE TIME BEING */}
-        {/* ===================================================================== */}
-        {/*  */}
       </div>
     );
   }

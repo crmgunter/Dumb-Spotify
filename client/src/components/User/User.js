@@ -4,9 +4,10 @@ import Spotify from 'spotify-web-api-js'
 import UserPlaylists from "./UserPlaylists";
 import styled from 'styled-components'
 
-const Margin = styled.div`
-/* margin: 20px; */
-`
+const ImageStyles = styled.img`
+  border-radius: 50%;
+  margin: 20px;
+`;
 
 const SpotifyWebApi = new Spotify()
 
@@ -50,13 +51,6 @@ class User extends Component {
         .then(data => console.log(this.state.spotifyUser.display_name));
   }
 
-  // getUser = async () => {
-  //   const userId = this.props.match.params.userId;
-  //   const res = await axios.get(`/api/users/${userId}`);
-  //   console.log(res.data);
-  //   this.setState({ user: res.data });
-  // };
-
   toggleForm = () => {
     this.setState({ form: !this.state.form });
   };
@@ -74,45 +68,13 @@ class User extends Component {
   render() {
     return (
       <div>
-        {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-        {/* ALL OF THIS COMMENTED OUT CODE IS FOR DATABASE STORED USERS */}
-        {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-        {/* <h1>hey from single user</h1> */}
-        {/* {this.state.user.username}
-        {this.state.user.location} */}
-        {/* <img src={this.state.user.image} alt="user image" /> */}
-        {/* <button onClick={this.toggleForm}>Edit User</button>
-        {this.state.form ? (
-          <EditUserForm user={this.state.user} getUser={this.getUser} />
-        ) : null}
-        <button onClick={this.toggleRemove}>Delete User</button>
-        {this.state.delete ? (
-          <div>
-            <p>Are you sure you want to delete?</p>
-            <button onClick={this.remove}>Yes</button>
-            <button onClick={this.toggleRemove}>No</button>
-          </div>
-        ) : null} */}
-
-        {/* {this.state.user.playlists.map(playlist => (
-          <div key={playlist._id}>
-            <Link
-              to={`/users/${this.state.user._id}/playlists/${playlist._id}`}
-            >
-              {playlist.name}
-            </Link>
-            {playlist.description}
-          </div>
-        ))} */}
-
-
         <div>
-          <Margin>
-            {this.state.spotifyUser.images[0] ? (<div><img src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
+          <div>
+            {this.state.spotifyUser.images[0] ? (<div><ImageStyles src={this.state.spotifyUser.images[0].url} alt={this.state.spotifyUser.display_name}/></div>) : null}
             {this.state.spotifyUser.display_name ? (<div>{this.state.spotifyUser.display_name}</div>) : null }
             <div>{this.state.spotifyUser.country}</div>
             <div><p>Followers: {this.state.spotifyUser.followers.total}</p></div>
-            </Margin>
+            </div>
         </div>
         <UserPlaylists
         userId={this.state.spotifyUser.id}/>

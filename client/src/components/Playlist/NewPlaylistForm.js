@@ -1,4 +1,31 @@
 import React, { Component } from "react";
+import styled from 'styled-components'
+
+const ButtonStyle = styled.button`
+  min-width: 100px;
+  margin: 10px;
+  padding: 15px;
+  background: none;
+  color: #e14658;
+  font-size: 13px;
+  border-radius: 5px;
+  border: #e14658 solid 1px;
+
+  :hover {
+    background: #e14658;
+    color: seashell;
+    border: 1px solid seashell;
+    cursor: pointer;
+  }
+`;
+
+const InputStyle = styled.input`
+border: 1px solid #e14658;
+border-radius: 5px;
+height: 30px;
+background: none;
+color: seashell;
+`
 
 class NewPlaylistForm extends Component {
   state = {
@@ -36,17 +63,18 @@ class NewPlaylistForm extends Component {
   render() {
     return (
       <div>
-        <h1>hey</h1>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <label htmlFor="name">Name: </label>
-            <input
+            <InputStyle
               onChange={this.handleChange}
               type="text"
               name="name"
+              placeholder="Enter Playlist Name"
               value={this.state.name}
             />
-            <button>Submit</button>
+            <div>
+            <ButtonStyle>Submit</ButtonStyle>
+            </div>
           </div>
         </form>
       </div>
