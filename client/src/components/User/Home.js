@@ -306,13 +306,13 @@ class Home extends Component {
                 
               </ButtonFlex>
             </TopContent>
+            {this.state.userTopTrackView? (<TopTracks topTracks={this.state.userTopTracks}/>) : null}
             {/* ============================================== */}
             {/* END USER INFO AND BUTTONS */}
             {/* ============================================== */}
             {/* BEGIN TOP ARTISTS */}
             {this.state.loggedIn && this.state.userTopView ? (
               <Flex>
-                {this.state.userTopTrackView? (<TopTracks topTracks={this.state.userTopTracks}/>) : null}
                 {this.state.userTop.items.map(artist => (
                   <ArtistContainer
                   onClick={() => {
