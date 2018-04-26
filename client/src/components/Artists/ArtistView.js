@@ -31,7 +31,7 @@ class ArtistView extends Component {
         }
       }
     ],
-    noEvents: "There are no events near you."
+    allShows: false
   };
 
   getEvents = () => {
@@ -64,6 +64,10 @@ class ArtistView extends Component {
     });
   };
 
+  toggleTheRest = () => {
+    this.setState({ allShows: !this.state.allShows })
+  }
+
   render() {
     return (
       <div>
@@ -80,15 +84,11 @@ class ArtistView extends Component {
             </div>
           ))}  
           </div>
-          ) : (<div>This artist has no upcoming events near you.</div>)}
-        </div>) : null}
-        
-
-
-        {/* THIS CODE DISPLAYS ALL EVENTS FOR ARTIST 
-        AND SHOULD BE SAVED FOR THE TIME BEING */}
-        {/* ===================================================================== */}
-        {/* {this.state.events[0] ? (
+          ) : (<div>This artist has no upcoming events near you.
+          <div><ButtonStyle onClick={this.toggleTheRest}>See all events</ButtonStyle></div>
+            {this.state.allShows ? (
+              <div>
+                {this.state.events[0] ? (
           <div>
             {this.state.events.map(event => (
               <div>
@@ -102,7 +102,19 @@ class ArtistView extends Component {
           </div>
         ) : (
           "This artist has no upcoming events near you."
-        )} */}
+        )}
+              </div>
+            ) : null}
+          </div>
+          )}
+        </div>) : null}
+        
+
+
+        {/* THIS CODE DISPLAYS ALL EVENTS FOR ARTIST 
+        AND SHOULD BE SAVED FOR THE TIME BEING */}
+        {/* ===================================================================== */}
+        {/*  */}
       </div>
     );
   }

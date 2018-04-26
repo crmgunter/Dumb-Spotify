@@ -213,12 +213,13 @@ class Home extends Component {
 
   getTopArtists = () => {
     this.setState({ userTopView: !this.state.userTopView });
+    if (this.state.userTopTrackView) {
+      this.setState({ userTopTrackView: !this.state.userTopTrackView})}
     let params = this.getHashParams();
     let accessToken = params.access_token;
 
-    fetch("https://api.spotify.com/v1/me/top/artists?limit=50", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      limit: 50
+    fetch("https://api.spotify.com/v1/me/top/artists?limit=30", {
+      headers: { Authorization: `Bearer ${accessToken}` }
     })
       .then(response => response.json())
       .then(data => this.setState({ userTop: data }));
@@ -226,10 +227,11 @@ class Home extends Component {
 
   getTopTracks = () => {
     this.setState({ userTopTrackView: !this.state.userTopTrackView });
+    this.setState({ userTopView: !this.state.userTopView})
     let params = this.getHashParams();
     let accessToken = params.access_token;
 
-    fetch("https://api.spotify.com/v1/me/top/tracks?limit=50", {
+    fetch("https://api.spotify.com/v1/me/top/tracks?limit=52", {
       headers: { Authorization: `Bearer ${accessToken}` },
       limit: 50
     })
