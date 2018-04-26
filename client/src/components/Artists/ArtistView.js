@@ -1,6 +1,23 @@
 import React, { Component } from "react";
+import styled from 'styled-components'
 
-const noShows = "There are no shows near you";
+const ButtonStyle = styled.button`
+  min-width: 100px;
+  margin: 10px;
+  padding: 10px 5px;
+  background: none;
+  color: #e14658;
+  font-size: 13px;
+  border-radius: 5px;
+  border: #e14658 solid 1px;
+
+  :hover {
+    background: #e14658;
+    color: seashell;
+    border: 1px solid seashell;
+    cursor: pointer;
+  }
+`;
 
 class ArtistView extends Component {
   state = {
@@ -50,7 +67,7 @@ class ArtistView extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.getEvents}>events</button>
+        <ButtonStyle onClick={this.getEvents}>events</ButtonStyle>
         {this.state.view ? (
         <div>
         {this.state.userLocationEvents ? (

@@ -4,6 +4,7 @@ import Spotify from "spotify-web-api-js";
 import ArtistView from "../Artists/ArtistView";
 import styled from "styled-components";
 import LandingPage from "./LandingPage";
+import TopTracks from './TopTracks'
 
 const ImageStyles = styled.img`
   border-radius: 50%;
@@ -18,6 +19,7 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin: 20px;
 `;
 
 const TopContent = styled.div`
@@ -33,15 +35,12 @@ const TopContent = styled.div`
 
 const UserInfo = styled.div`
   margin: 20px;
-  max-width: 40vw;
-
- 
+  max-width: 300px;
 `;
 
 const ButtonFlex = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
 
 const ButtonStyle = styled.button`
@@ -62,6 +61,15 @@ const ButtonStyle = styled.button`
   }
 `;
 
+const ArtistContainer = styled.div`
+  border: 1px solid #e14658;
+  margin: 10px 5px;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 220px;
+  min-width: 220px;
+`;
+
 const SpotifyWebApi = new Spotify();
 
 class Home extends Component {
@@ -72,6 +80,7 @@ class Home extends Component {
       loggedIn: params.access_token ? true : false,
       users: [],
       userTopView: false,
+      userTopTrackView: false,
       userTop: {
         items: [
           {
@@ -79,6 +88,20 @@ class Home extends Component {
             name: ""
           }
         ]
+      },
+      userTopTracks: {
+        items: [{
+          name: '',
+          artists: [{
+            name: ''
+          }],
+          album: {
+            name: '',
+            images: [{
+              url: ''
+            }]
+          }
+        }]
       },
       address: {
         results: [
@@ -189,7 +212,7 @@ class Home extends Component {
   };
 
   getTopArtists = () => {
-    this.setState({ userTopView: !this.state.userTopView })
+    this.setState({ userTopView: !this.state.userTopView });
     let params = this.getHashParams();
     let accessToken = params.access_token;
 
@@ -199,6 +222,19 @@ class Home extends Component {
     })
       .then(response => response.json())
       .then(data => this.setState({ userTop: data }));
+  };
+
+  getTopTracks = () => {
+    this.setState({ userTopTrackView: !this.state.userTopTrackView });
+    let params = this.getHashParams();
+    let accessToken = params.access_token;
+
+    fetch("https://api.spotify.com/v1/me/top/tracks?limit=50", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      limit: 50
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ userTopTracks: data }));
   };
 
   getToken = () => {
@@ -229,9 +265,9 @@ class Home extends Component {
                   <div>
                     {this.state.user.display_name ? (
                       <div>
-                        <Link to={`users/${this.state.user.id}`}>
+                        <h3>
                           Hello, {this.state.user.display_name.split(" ")[0]}!
-                        </Link>
+                        </h3>
                       </div>
                     ) : (
                       <Link to={`users/${this.state.user.id}`}>
@@ -250,14 +286,18 @@ class Home extends Component {
               </UserInfo>
               <ButtonFlex className="fadeInDownBig">
                 <div>
-                <Link to={`users/${this.state.user.id}`}><ButtonStyle>Playlists</ButtonStyle></Link>
+                  <Link to={`users/${this.state.user.id}`}>
+                    <ButtonStyle>Playlists</ButtonStyle>
+                  </Link>
                 </div>
                 <div>
-                  <ButtonStyle onClick={this.getTopArtists}>Top Artists</ButtonStyle>
-                  
+                  <ButtonStyle onClick={this.getTopArtists}>
+                    Top Artists
+                  </ButtonStyle>
                 </div>
                 <div>
-                  <ButtonStyle>Top Tracks</ButtonStyle>
+                  <ButtonStyle onClick={this.getTopTracks}>Top Tracks</ButtonStyle>
+                  {this.state.userTopTrackView? (<TopTracks topTracks={this.state.userTopTracks}/>) : null}
                 </div>
               </ButtonFlex>
             </TopContent>
@@ -268,10 +308,8 @@ class Home extends Component {
             {this.state.loggedIn && this.state.userTopView ? (
               <Flex>
                 {this.state.userTop.items.map(artist => (
-                  <div className="fromRight animated fadeInRightBig">
-                    <div>
-                      <ArtistImage src={artist.images[0].url} />
-                    </div>
+                  <ArtistContainer className="fromRight animated fadeInRightBig">
+                      <ArtistImage src={artist.images[0].url} />                    
                     <div
                       onClick={() => {
                         this.toggleEvents(artist.id);
@@ -288,16 +326,14 @@ class Home extends Component {
                         }
                       />
                     ) : null}
-                  </div>
+                  </ArtistContainer>
                 ))}
               </Flex>
             ) : null}
           </div>
-          
-        ) 
-        // ===========================================
-        // END USER TOP ARTISTS
-        : (
+        ) : (
+          // ===========================================
+          // END USER TOP ARTISTS
           <div>
             <LandingPage />
           </div>

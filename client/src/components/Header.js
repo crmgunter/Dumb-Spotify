@@ -8,6 +8,7 @@ display: flex;
 margin-bottom: 0;
 background: #e14658;
 color: seashell;
+box-shadow: 0px 10px 10px rgba(0,0,0,0.5);
 `
 
 const Center = styled.div`
