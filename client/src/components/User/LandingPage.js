@@ -4,6 +4,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faCoffee from "@fortawesome/fontawesome-free-solid/faCoffee";
 import faArrowCircleDown from "@fortawesome/fontawesome-free-solid/faArrowCircleDown";
+
 const LandingImage = styled.div`
   background-image: url("https://images.unsplash.com/photo-1522791194246-7129e9750305?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55c772c62c24b498d3a2202f9b06435c&auto=format&fit=crop&w=800&q=60");
   height: 100vh;
@@ -56,8 +57,6 @@ const ButtonStyle = styled.button`
 `;
 
 const PageContent = styled.div`
-  height: 100vh;
-  width: 100vw;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -72,6 +71,7 @@ const ImageLeft = styled.div`
 
 const ContentBlocks = styled.div`
   min-height: 80vh;
+  max-height: 100vh;
   width: 40vw;
   background: seashell;
   color: black;
@@ -133,7 +133,7 @@ class LandingPage extends Component {
         <ScrollAnimation animateIn="fadeInLeftBig">
           <PageContent>
             <ImageLeft />
-            <ContentBlocks className="animated fadeInUpBig">
+            <ContentBlocks>
               <ContentFlex>
                 <div>
                   <h1>Track Your Favorite Artists</h1>

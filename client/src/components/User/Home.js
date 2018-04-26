@@ -18,10 +18,6 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-
-  .fromRight {
-    animation-duration: 2s;
-  }
 `;
 
 const TopContent = styled.div`
@@ -75,6 +71,7 @@ class Home extends Component {
     this.state = {
       loggedIn: params.access_token ? true : false,
       users: [],
+      userTopView: false,
       userTop: {
         items: [
           {
@@ -97,7 +94,6 @@ class Home extends Component {
         images: [{}],
         followers: {}
       },
-      form: false,
       toggleEvents: ""
     };
     if (params.access_token) {
@@ -119,7 +115,6 @@ class Home extends Component {
   componentDidMount() {
     this.getSpotifyUser();
     this.getToken();
-    this.getTopArtists();
     this.getLocation();
   }
 
@@ -194,6 +189,7 @@ class Home extends Component {
   };
 
   getTopArtists = () => {
+    this.setState({ userTopView: !this.state.userTopView })
     let params = this.getHashParams();
     let accessToken = params.access_token;
 
@@ -211,10 +207,6 @@ class Home extends Component {
     localStorage.setItem(token, params.access_token);
   };
 
-  toggleForm = () => {
-    this.setState({ form: !this.state.form });
-  };
-
   toggleEvents = id => {
     console.log(id);
     const artist = id;
@@ -226,6 +218,8 @@ class Home extends Component {
       <div>
         {this.state.loggedIn ? (
           <div>
+            {/* =========================================== */}
+            {/* BEGIN USER INFO AND BUTTONS */}
             <TopContent>
               <UserInfo>
                 <div className="animated fadeInLeftBig">
@@ -256,17 +250,22 @@ class Home extends Component {
               </UserInfo>
               <ButtonFlex className="fadeInDownBig">
                 <div>
-                  <ButtonStyle>Playlists</ButtonStyle>
+                <Link to={`users/${this.state.user.id}`}><ButtonStyle>Playlists</ButtonStyle></Link>
                 </div>
                 <div>
-                  <ButtonStyle>Top Artists</ButtonStyle>
+                  <ButtonStyle onClick={this.getTopArtists}>Top Artists</ButtonStyle>
+                  
                 </div>
                 <div>
                   <ButtonStyle>Top Tracks</ButtonStyle>
                 </div>
               </ButtonFlex>
             </TopContent>
-            {this.state.loggedIn ? (
+            {/* ============================================== */}
+            {/* END USER INFO AND BUTTONS */}
+            {/* ============================================== */}
+            {/* BEGIN TOP ARTISTS */}
+            {this.state.loggedIn && this.state.userTopView ? (
               <Flex>
                 {this.state.userTop.items.map(artist => (
                   <div className="fromRight animated fadeInRightBig">
@@ -294,7 +293,11 @@ class Home extends Component {
               </Flex>
             ) : null}
           </div>
-        ) : (
+          
+        ) 
+        // ===========================================
+        // END USER TOP ARTISTS
+        : (
           <div>
             <LandingPage />
           </div>
