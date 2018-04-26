@@ -40,7 +40,7 @@ class TopTracks extends Component {
             <div>
                 <Flex>
                 {this.props.topTracks.items.map((track) => (
-                        <ArtistContainer className="fromRight animated fadeInRightBig">
+                        <ArtistContainer className="animated fadeInLeftBig">
                         <ArtistImage src={track.album.images[0].url} />
                     <div>{track.name}</div>
                     <div>{track.artists[0].name}</div>
