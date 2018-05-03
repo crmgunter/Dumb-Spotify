@@ -319,7 +319,8 @@ class Home extends Component {
                     this.toggleEvents(artist.id);
                   }}
                   className="fromRight animated fadeInRightBig">
-                      <ArtistImage src={artist.images[0].url} />                    
+                  {artist.images[0] ? (<ArtistImage src={artist.images[0].url} />   ) : null}
+                                       
                     <div
                       
                     >
